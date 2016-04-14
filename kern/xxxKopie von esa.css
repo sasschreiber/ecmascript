@@ -1,0 +1,473 @@
+﻿html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,
+address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,
+sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,
+table,caption,tbody,tfoot,thead,tr,th,td{background:transparent;border:0;margin:0;padding:0;vertical-align:baseline;}
+body{line-height:1;}
+h1,h2,h3,h4,h5,h6{clear:both;font-weight:normal;}
+ol,ul{list-style:none;}
+blockquote{quotes:none;}
+blockquote:before,blockquote:after{content:'';content:none;}
+del{text-decoration:line-through;}
+
+
+html, body { margin: 0px;padding: 0px 0px 0px 0px; font-size: 17px; color:#2f4f4f; background-color: #fff;overflow-y:auto;}
+
+a[rel~="nofollow"], a[rel~="nofollow"] * {color:#aaa !important; background-color:#fff !important;}
+.null, p.null:hover, pre.null:hover {background-color:inherit !important;color:inherit !important;margin-left:0px;border:none;}
+a[href] {margin:1px;padding:0px 2px;font: normal 13px/1.5 "Zapf Dingbats", Tahoma, Geneva,sans-serif;border-bottom:1px solid #eee;}
+a[id] {border:1px solid #fff;}
+a[href] img {border: none;}
+
+a:link,a:visited {text-decoration:none !important;white-space:nowrap;color:#765;background-color:inherit;}
+a:focus,a:hover,a:active {text-decoration: none !important;
+margin:1px 1px 1px 1px;
+padding:0px 1px;
+font: normal 13px/1.5 "Zapf Dingbats", Tahoma, Geneva,sans-serif;
+background-color: #765;color: #fff;border: 1px solid #88f;
+}
+a:focus,a:hover {cursor: pointer;}
+
+.extern:after,.bild:after,.pfeil:before,.pfeil_right:before,.pfeil_down:before,.sonne:before {
+padding:0px 1px;font: normal 13px/1.5 "Zapf Dingbats", Tahoma, Geneva,sans-serif;
+}
+.extern:after {content:"➹";margin:0 0 0 -1px;padding:0;color:#660;background-color:transparent;} 
+.intern:after {content:"➸";margin:0 0 0 -1px;padding:0;color:#660;background-color:transparent;} 
+
+.bild:after { content:"❐";margin:0 3px 0 -1px;padding:0;color:#960;background-color:transparent;} 
+/*.warenkorb:before {float:right;content: url(./img/warenkorb.gif);margin:0 3px 0 -1px;padding:0;color:#960;background-color:transparent;} 
+
+.xxXXwarenkorb_fuellen:before {float:right;content: url(./img/list-style-image.png);margin:10 3px 0px -1px;padding:0;color:#960;background-color:transparent;} 
+*/
+.pfeil:before       {content:"➥";margin:2px 1px; padding:0 4px 0 4px;border:1px outset #eee;background-color:#ffe;color:#765;} 
+.sonne:before       {content:"☀";margin:2px 1px; padding:0 6px 0 6px;border:1px outset #999;background-color:#ddd;text-align:center;}
+.pfeil_right:before {content:"►";margin:2px 1px; padding:0 6px 0 6px;border:1px outset #999;background-color:#ddd;text-align:center;}
+.pfeil_down:before  {content:"▼";margin:2px 1px; padding:0 6px 0 6px;border:1px outset #999;background-color:#ddd;text-align:center;}
+.aufgabe:before     {content:"◎";margin:2px 1px; padding:0 6px 0 6px;font:14px/18px "Courier New", Monospace;border-left: 1px solid #d8e4f8;border-bottom: 1px solid #d8e4f8; }
+.tool:before        {content:"☀";margin:2px 1px; padding:0 6px 0 6px; font:14px/18px "Courier New", Monospace;border-left: 1px solid #d8e4f8;border-bottom: 1px solid #d8e4f8; }
+.quiz:before        {content:"✔";margin:2px 1px; padding:0 6px 0 6px; font:14px/18px "Courier New", Monospace;border-left: 1px solid #d8e4f8;border-bottom: 1px solid #d8e4f8; }
+.phi:before         {content:"→" !important; margin:2px 1px; padding:0 6px 0 6px; font:14px/18px "Courier New", Monospace;border-left: 1px solid #d8e4f8;border-bottom: 1px solid #d8e4f8; }
+.vorlesung:before   {content:"ꘃ" !important; margin:2px 1px; padding:0 6px 0 6px; font:14px/18px "Courier New", Monospace;border-left: 1px solid #d8e4f8;border-bottom: 1px solid #d8e4f8; }
+
+
+.first_line:first-letter {margin-left:-48px !important;}
+.screenreader, .sr {position: absolute;top:auto;left:-9999px;width:1px; height:1px; overflow:hidden;}
+p, pre, div, input, a, span  {font-size: 15px;}
+p, div, input {clear:both;}
+
+pre, .pre {/*min-width:320px;*/color:#300;
+font-size: 13px; 
+white-space: pre;  
+white-space: pre-wrap; 
+white-space: pre-line; 
+white-space: pre-wrap; 
+word-wrap: break-word;
+}
+
+
+li p {margin-left:0px !important;}
+
+form, input, select {display: inline; overflow: hidden;padding: 0; margin: 0;
+}
+input[type="radio"] { vertical-align: text-bottom; }
+input[type="checkbox"] { vertical-align: bottom; }
+
+.span_select_help {float:left;width:16px !important; display:inline; overflow: hidden; }
+.select {float:left;display: inline; overflow: hidden;}
+select {
+font-size: 12px;
+cursor: pointer;
+margin: 0px;
+padding: 2px;
+}
+
+select:hover {
+font-size: 12px;
+text-decoration: none !important;
+color: #fff !important;background-color: #999 !important;
+margin: 0px;
+padding: 2px;
+}
+textarea {
+padding: 0px;
+margin: 0px;
+font: 12px 'Courier New' ,monospace !important;
+}
+
+h1, .h1 {font-size:22px;line-height:28px;text-align:inherit; text-align:center;
+color: #fff; background-color: #765;
+font: normal 22px/28px "Zapf Dingbats",Tahoma,Geneva,sans-serif; 
+margin: 0px 0px 12px 0px;
+padding: 4px 4px 8px 4px;
+border:1px solid #888;
+/*margin: 0px 8px 12px 4px;
+text-shadow: 1px 2px 0px #aad, 2px 3px 0px #88a, 3px 4px 0px #777;
+box-shadow: 4px 4px 4px #666;
+border-radius:0px;
+*/
+}
+h1 dfn, h2 dfn  {color: #fff !important; background-color: #765 !important;text-shadow:none;}
+
+
+.border_h1_home,.border_h1_home:link,
+.border_h1_plus,.border_h1_plus:link,
+.border_h1_minus,.border_h1_minus:link
+{ display:inline;float:left;text-decoration:none;vertical-align:middle !important;line-height:28px !important;font-size:28px !important;
+color:#765 !important;background-color:#987 !important;
+padding:0 6px !important;margin: 0px 2px 0px 0px !important;
+border-radius:5px;border: 1px solid #964 !important;text-shadow:none;
+}
+
+.border_h1_home:hover,
+.border_h1_plus:hover,
+.border_h1_minus:hover
+{color:#fff !important;background:#191999 !important;
+border: 1px solid #ccc !important;
+padding:0 6px !important;
+margin: 0px 2px 0px 0px !important;
+border-radius:5px;
+}
+
+
+
+
+h2 {font-size: 20px;text-align:left;color:#343;
+margin: 15px 0px 6px 8px; padding: 2px 4px 1px 8px;border-bottom:1px solid #ccc;
+text-shadow: 2px 1px 2px #dd9;
+}
+h3 {clear:both; font-size: 18px;text-align: left;color: #999;
+margin: 15px 0px 6px 4px; padding: 2px 4px 1px 8px;
+}
+h4 {clear:both; color: #765;
+font: bold 16px/1.5 "Zapf Dingbats", Tahoma, Geneva,sans-serif;
+margin: 20px 10px 6px 4px; padding: 2px 4px 1px 8px;
+border-bottom: 1px solid #ddd;
+}
+
+h5,h6 {font-size: 16px;
+padding: 4px 4px 4px 8px;
+margin: 12px 0px 6px -6px;
+}
+pre, p { 
+margin: 6px 0px 4px 14px;
+padding: 3px;
+line-height: 16px;
+}
+.dir {margin-left: 48px;}
+.dir_center {margin-left: 19%;margin-right: 19%;}
+li p.dir {margin-left: 28px !important;}
+
+blockquote, .blockquote{/*min-width:320px;*/
+color: #335;
+padding: 12px 6px 12px 16px !important;
+font-size:14px;
+margin: 0px 76px 0px 14px;
+line-height: 16px;
+}
+
+
+var,.var, em { background-color:inherit; color:#400; }
+del, .del { text-decoration: line-through; }
+code,.code {color: #a31515; font: normal 13px/15px "Lucida Console","Courier New",Monaco, monospace;}
+div.code ol, div.code p { margin:0px;padding:2px 2px 2px 48px;background-color:#ccc; color:#333;}
+div.code li {background-color:#fafafa; color:#aaa;margin:0px;padding:0px;border-bottom:1px solid #ddd;}
+div.code pre {background-color:#ffe;color:#004;margin:1px 0;padding:0px;}
+
+dl dd blockquote {margin-left: 48px !important;}
+.tab1 { margin-left: 48px !important;}
+.tab2 { margin-left: 96px !important;}
+strong, .strong {
+font-size: 16px !important;
+font-weight: bold !important;
+}
+dl { clear:both;
+margin: 8px 0px 0px 4px;
+margin: 0;
+padding: 0;
+line-height: 16px;
+}
+
+dl dt dfn,  h1 dfn, h2 dfn {display:inline; float:right; 
+background-color: #fff; color: #765;padding:7px 2px 2px 7px !important;
+font: normal 13px/1.5 "Zapf Dingbats", Tahoma, Geneva,sans-serif;line-height: 15px !important;
+text-shadow:none;
+}
+
+
+dl dt {clear:both; color: #765;
+font: bold 16px/1.5 "Zapf Dingbats", Tahoma, Geneva,sans-serif; 
+padding: 4px 4px 2px 2px;
+margin:  4px 0px 4px 0px;
+border-bottom: 1px solid #ddd;
+}
+dl dd dl dt {color: #449;
+font: bold 15px/1.5 Geneva,"Zapf Dingbats", Tahoma, sans-serif;
+text-shadow: none;
+}
+dl dt:hover, dl dt:hover dfn{background-color: #765;color: #fff !important;
+text-shadow: none;
+}
+
+dt.dt_hide {margin:2px;padding:2px;text-decoration:none;}
+dt.dt_show {margin:2px;padding:2px;text-decoration:none;}
+dt:before,
+dt.dt_hide:before {content:"►";margin:0 0 2px 4px; padding:2px 9px 2px 9px !important;border:1px solid #999;background-color:#eee;color:#765;font:10px "Courier New", Monospace;text-align:center;text-shadow:none;}
+dt.dt_show:before {content:"▼";margin:0 0 2px 4px; padding:2px 9px 2px 9px !important;border:1px solid #999;background-color:#765;color:#fff;font:10px "Courier New", Monospace;text-align:center;text-shadow:none;}
+dt:after,
+dt.dt_hide:after {content:"Mehr...";  margin:0; padding:3px 4px 2px 4px;color: #ddd; font:10px "Courier New", Monospace;}
+dt.dt_show:after {content:"Verbergen";margin:0; padding:3px 2px 2px 1px;color: #ddd;font:10px "Times New Roman",Serif;}
+
+dl dd {clear:both !important;display: block;
+margin: 8px 0px 20px 18px;
+margin: 8px 0px 20px 4px;
+line-height: 16px;
+}
+
+
+ul { clear:both;
+list-style-type: circle;
+margin: 0 4px 0 6px;
+padding:4px 0;
+color: #000;
+}
+ol { clear:both;
+list-style-type:decimal;
+margin: 0 4px 0 6px;
+padding: 0;
+font-size: 15px; 
+}
+
+ol li { color: #2f4f4f;list-style-position:outside;
+font-size: inherit;
+line-height: 15px;
+padding: 2px 2px 2px 0px;
+margin: 1px 0px 1px 56px;
+}
+ul li  { color: #2f4f4f;list-style-position:outside;
+font-size: 15px; 
+line-height: 15px;
+padding: 2px 0px 2px 4px !important;
+margin: 2px 0px 1px 14px !important;
+}
+
+ul li p {clear:both;margin-left: 0 !important;padding-left: 0 !important;
+background-color:#fff;color: #424;
+
+font: normal 13px/15px "Zapf Dingbats",Tahoma, Geneva,sans-serif;
+}
+
+ul li ul, ol li ol, dl dd dl {
+margin: 5px 0px 0px 16px !important;
+margin:0;
+line-height: 15px;
+}
+
+hr {margin:1px auto; width:38%; text-align:center;
+height: 2px; border:5px dotted #fff; background: #eee;
+}
+.table_rows td { border-bottom:1px solid #ccc;
+display:table-cell;
+margin:0px;
+padding:2px;
+}
+.table_cols td { border-left:1px solid #ccc;
+display:table-cell;
+margin:0px;
+padding:2px;
+}
+table {display:table;
+z-index:-1;
+font:13px "Times New Roman", serif;
+border-collapse: separate;
+empty-cells:show;
+border-spacing:0;
+margin:6px 0px 6px 4px;
+margin-left: auto; margin-right: auto;
+padding:0;
+border:1px solid #ccc;
+}
+table tr {
+display:table-row;
+margin:0px;
+padding:2px;
+}
+
+table tr th {
+vertical-align:top;
+text-align:center;
+background-color:#f0f0f0;color:#999;
+font:bold 16px/16px arial, helvetica, sans-serif;
+margin:0px;
+padding:2px 4px;
+}
+
+table tr td {
+vertical-align:top;
+color:#2f4f4f;
+font-weight:400;
+font:normal 13px/13px arial, helvetica, sans-serif;
+margin:0px;
+padding:2px 4px;
+}
+
+table tr td pre { 
+border:none;
+vertical-align:top;
+font:normal 14px/14px "Courier New", "Everson Mono", monospace, serif;
+letter-spacing:0;
+word-spacing:normal;
+margin:0;
+padding:2px;
+}
+p.small, pre.small, table tr td pre.small { 
+font:normal 11px/11px "Courier New", "Everson Mono", monospace, serif;
+letter-spacing: -1px;word-spacing:-1px;
+}
+table tr td ul li {
+list-style-type:square;
+margin:0.2em 0.1em 0.2em 1.5em;
+}
+table tr td ol li {
+margin: 3px 1px 1px 28px;
+}
+
+.signet,.signet:link {width:32px;font:13px/16px arial, serife;padding:2px;margin:1px;text-align:center;vertical-align:bottom;
+color: #fff !important;background-color: #aaa;border-radius:4px;}
+.signet:hover {color: #fff !important;background-color: #765 !important;}
+
+.button,.button:link {font:14px/16px arial, serife;padding:2px;margin:0px;text-align:center; vertical-align:middle;
+ color: #fff; background-color: #aaa;border-radius:4px;
+ width:120px;
+ }
+.button:hover{ color: #fff; background-color: #765 !important;}
+
+.pointer {cursor: pointer;}
+.rand {border: 2px solid #716f64 !important;}
+.border {border: 1px solid #aaa !important; margin-bottom:12px;
+border-radius:10px;
+box-shadow:-4px 3px 6px #aaa, 4px -3px 8px #eee,4px 4px 9px #ddf,inset 4px 4px 4px rgba(0,0,0,0.8);
+}
+
+.border_left {border-left: 1px solid #aaa !important;}
+.border_bottom {border-bottom: 1px solid #aaa !important;}
+.border_none {border: none !important;}
+.box_shadow_none {box-shadow:none !important;}
+.text_shadow_none {text-shadow:none !important;}
+
+.border1 {border: 3px ridge #ddd;}
+.border_left {border-left: 1px solid #ddd !important;}
+.border_1 {border-bottom: 1px solid #ccc !important;}
+.border_2 {border-top: 1px solid #ccc !important;border-bottom: 1px solid #ccc !important;}
+.border_none {border: none !important;}
+.char_button {min-width:20px;font-size:14px;line-height:15px;font-weight:bold;vertical-align:middle;overflow:hidden;}
+.shadow_none {text-shadow:none !important;}
+.decoration_none {text-decoration: none !important;}
+.inline {display: inline;}
+.right { text-align: right;}
+.center {text-align: center;}
+.halbzeilig {line-height:7px;letter-spacing:0px;text-decoration:none;}
+.m0p0 {padding: 0 !important;margin: 0 !important;}
+.m0 {margin: 0 !important;}
+.m1 {margin: 1px !important;}
+.m2 {margin: 2px !important;}
+.m3 {margin: 3px !important;}
+.mt1 {margin-top: 1px !important;}
+.mt2 {margin-top: 2px !important;}
+.mt3 {margin-top: 3px !important;}
+.p0 {padding: 0 !important;}
+.p1 {padding: 1px !important;}
+.p2 {padding: 2px !important;}
+.p3 {padding: 3px !important;}
+.p4 {padding: 4px !important;}
+
+.float_left {float:left !important;}
+.float_right {float:right;}
+.float_clear_left {clear:left;}
+.float_clear {clear:both;display:block;overflow:hidden;visibility:hidden;width:0;height:0;}
+
+.overflow_hidden{ overflow:hidden; }
+.w_auto {width: auto;}
+.o_auto {height: 48px;width: 99%;margin: auto;overflow: auto;}
+.w99hidden {float: left;width: 99%;overflow: hidden !important;}
+.w99 {float: left;width: 99%;overflow: hidden;}
+.w49 {float: left;width: 49%;overflow: hidden;}
+
+.a0 {float: left;width: 512px;overflow: hidden;}
+.a1 {float: left;width: 256px;overflow: hidden;}
+.a2 {float: left;width: 160px;overflow: hidden;}
+.a3 {float: left;width: 96px;overflow: hidden;}
+.a3_select {float: left;width: 79px;overflow: hidden;}
+.a4 {float: left;width: 68px;overflow: hidden;}
+.a5 {float: left;width: 32px;overflow: hidden;}
+.a6 {float: left;width: 16px;overflow: hidden;}
+.a7 {float: left;width: 13px;overflow: hidden;}
+.a8 {float: left;width: 8px;overflow: hidden;}
+.a9 {float: left;width: 4px;overflow: hidden;}
+.a10 {float: left;width: 2px;overflow: hidden;}
+
+.b0 {float: right;width: 512px;overflow: hidden;}
+.b1 {float: right;width: 256px;overflow: hidden;}
+.b2 {float: right;width: 160px;overflow: hidden;}
+.b3 {float: right;width: 96px;overflow: hidden;}
+.b4 {float: right;width: 68px;overflow: hidden;}
+.b5 {float: right;width: 32px;overflow: hidden;}
+.b6 {float: right;width: 16px;overflow: hidden;}
+.b7 {float: right;width: 13px;overflow: hidden;}
+
+.font0 {font-size: 0px !important;}
+.font8 {font-size: 8px !important;line-height: 8px !important;}
+.font9 {font-size: 9px !important;line-height: 9px !important;}
+.font10 {font-size: 10px !important;line-height: 10px !important;}
+.font11 {font-size: 11px !important;line-height: 11px !important;}
+.font12 {font-size: 12px !important;line-height: 12px !important;}
+.font13 {font-size: 13px !important;line-height: 13px !important;}
+.font14 {font-size: 14px !important;line-height: 14px !important;}
+.font15 {font-size: 15px !important;line-height: 15px !important;}
+.font16 {font-size: 16px !important;line-height: 16px !important;}
+.font20 {font-style: normal !important;font-size: 20px !important;}
+.font24 { font:italic bold 24px/24px arial, helvetica, sans-serif !important;}
+.font32 {font-style: normal !important;font-size: 32px !important;}
+.italic {font-style:italic;}
+
+.font_serif {font-family:"Times New Roman",Times,Palatino,Garamond,Georgia,Arial,"Book Antiqua",serif;}
+.font_sans_serif {font-family:"Zapf Dingbats",Tahoma, Geneva, sans-serif; }
+.font_monospace {font-family:"Courier New" , "Lucida Console",Monaco,monospace;}
+.font_cursiv {font-family:"Comic Sans MS",cursive; }
+.font_fett {font-family:verdana,sans-serif;}
+.font_fantasy {font-family:Pristina,Ravie,fantasy;}
+
+.line_height10{line-height: 16px;}
+.margin0{margin:0;}
+.padding0{padding:0;}
+
+.bg_inherit {background: inherit !important;}
+.col_white {color:#fff !important;}
+.col_char {color:#3f3f41 !important;}
+.col_grau {color:silver !important;}
+.col_orange {color: #ff8c00 !important;}
+.col_blau {color: #191999 !important;}
+
+.white {color: #3f3f41 !important;background-color: #fff !important;}
+.black {color: #fff !important;background-color: #000 !important;}
+.blau {color: #fff !important;background-color: #191999 !important;}
+.blau1 {color: #3f3f41 !important;background-color: #d8e4f7 !important;}
+.rot {color: #fff !important;background-color: #a90a08 !important;}
+.gruen {color: #fff !important;background-color: #74971b !important;}
+.gruen1 {color: #000 !important;background-color: #cff5a8 !important;}
+.braun {color: #fff !important;background-color: #826647 !important;}
+.grau {color: #000 !important;background-color: #fbfafd !important;}
+.grau0 {color: #fff !important;background-color: #999 !important;}
+.grau1 {color: #ccc !important;background-color: #f8fafe !important;}
+.grau2 {color: #2f4f4f !important;background-color: #f8f8f8 !important;}
+.grau3 {color: #2f4f4f !important;background-color: #f0f0f0 !important;}
+.grau4 {color: #224 !important;background-color: #eeecee !important;}
+
+
+/*
+@media aural {   
+   h1, h2, h3 { stress: 20; richness: 90; } 
+   .hide { speak: none; } 
+   p.copyright { volume: x-soft; speech-rate: x-fast; } 
+   pre { speak-punctuation: code; }  
+   dt { pause-before: 20%; } 
+ }
+ */

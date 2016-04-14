@@ -1,0 +1,6 @@
+# ===
+# Webseite: ...
+# ===
+
+User-agent: *
+Disallow: /

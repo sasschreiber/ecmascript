@@ -1,0 +1,206 @@
+﻿@media screen {
+html, body { margin: 0;padding:0; font-size: 1.05em; color:#2f4f4f; background-color: #fff;overflow:auto;}
+
+a {text-decoration: none !important;margin:0.08em;padding:0.08em;background-color: #770077;font: normal 1.1em "Zapf Dingbats", sans-serif;}
+a[href] img {border: none;}
+a:link,a:visited {color:#770077;background-color:inherit;}
+a:focus,a:hover,a:active,.a_hover {background-color: #770077;color: #fff;}
+a:focus,a:hover, select,select optgroup option {cursor: pointer;}
+.null, p.null:hover, pre.null:hover {background-color:inherit !important;color:inherit !important;margin-left:0;border:none;}
+
+.extern:after,.bild:after,.pfeil:before,.pfeil_right:before,.pfeil_down:before{
+padding:0.08em 0.3em;font: normal 1.05em "Zapf Dingbats", sans-serif;
+}
+.extern:after {content:"➹";margin:0 0 0 -0.08em;padding:0;color:#660;background-color:transparent;} 
+.bild:after { content:"❐";margin:0 0.1em 0 -0.08em;padding:0;color:#960;background-color:transparent;} 
+.pfeil:before       {content:"➥";margin:0.1em 0.08em; padding:0.08em 0.3em;border:0.08em outset #770077;background-color:#ede;color:#770077;} 
+.pfeil_right:before {content:"►";margin:0.1em 0.08em; padding:0.08em 0.3em;border:0.08em outset #770077;background-color:#ede;text-align:center;}
+.pfeil_down:before  {content:"▼";margin:0.1em 0.08em; padding:0.08em 0.3em;border:0.08em outset #770077;background-color:#ede;text-align:center;}
+
+p, pre, div, input, a, span  {font-size: 1.05em;}
+p, div, input {clear:both;}
+
+pre, .pre { 
+color:#300;
+font-size: 1em; 
+white-space: pre;  
+white-space: pre-wrap; 
+white-space: pre-line; 
+white-space: pre-wrap; 
+word-wrap: break-word;
+}
+
+
+li p {margin-left:0 !important;}
+
+form, input, select {display:inline-block; overflow:hidden;padding: 0; margin: 0;
+}
+input[type="radio"] { vertical-align: text-bottom; }
+input[type="checkbox"] { vertical-align: bottom; }
+
+select { font-size: 1.05em;color: #770077;background-color:#fff;border-radius:0.3em;}
+select:hover,
+option:hover {font-size: 1.05em;color: #fff;background-color: #770077;border-radius:0.3em;}
+
+textarea {cursor:text;padding: 0.1em;margin:0;font: 1.05em 'Courier New',monospace !important;color: #020;}
+
+h1, .h1 { color: #fff; background-color: #770077;background-color: #663366;
+font: normal 1.5em/1.5em "Zapf Dingbats",Tahoma,Geneva,sans-serif; 
+margin:0.05em 0.3em 0 0;
+padding:0.05em 0.3em; 
+border:0.08em solid #888;
+}
+
+.border_h1_home,.border_h1_home:link,
+.border_h1_plus,.border_h1_plus:link,
+.border_h1_minus,.border_h1_minus:link
+{ display:inline;float:left;text-decoration:none;font-size:1.1em !important;vertical-align:middle !important;line-height:1.1em !important;
+color:#770077 !important;background-color:#fefefe !important;
+padding:0.05em 0.3em !important; 
+margin: 0 0.05em 0 0 !important;
+border-radius:0.3em;border: 0.08em solid #964 !important;text-shadow:none; opacity:0.7;
+}
+
+.border_h1_home:hover,
+.border_h1_plus:hover,
+.border_h1_minus:hover
+{color:#fff !important;background:#770077 !important;
+border: 0.08em solid #ccc !important;
+padding:0.1em 0.3em !important; 
+margin: 0 0.05em 0 0 !important;
+border-radius:0.3em;
+}
+
+pre, p { 
+margin: 0.4em 0  0.3em 1em;
+padding: 0.4em;
+line-height: 1em;
+}
+.dir {margin-left: 3em;}
+.dir_center {margin-left: 19%;margin-right: 19%;}
+li p.dir {margin-left: 2em !important;}
+
+var,.var, em { background-color:inherit; color:#400; }
+del, .del { text-decoration: line-through; }
+code,.code {color: #a31515; font: normal 1.05em "Courier New",Monaco, monospace;}
+div.code ol, div.code p { margin:0;padding:0.1em 0.1em 0.1em 3em;background-color:#ccc; color:#333;}
+div.code li {background-color:#fafafa; color:#aaa;margin:0;padding:0;}
+div.code pre {background-color:#ffe;color:#004;margin:0.08em 0;padding:0;}
+
+strong, .strong {font-weight: bold !important;}
+dl { clear:both;
+margin: 0.5em 0 0 0.4em;
+margin: 0;
+padding: 0;
+line-height: 1.1em;
+}
+
+dl dt dfn,  h1 dfn, h2 dfn {display:inline-block; float:right; 
+background-color:#fff; color:#770077;padding:0.5em 0.1em 0.1em 0.5em !important;
+font: normal 0.95em "Zapf Dingbats", sans-serif;line-height: 1em !important;
+}
+
+dl dt {clear:both; color: #770077;font:bold 1.2em "Zapf Dingbats", sans-serif; 
+padding: 0.3em 0.3em 0.2em 0.2em;
+margin:  0.3em 0 0.3em 0;
+border-bottom: 0.08em solid #ddd;
+}
+dl dt:hover, dl dt:hover dfn{background-color: #770077;color: #fff !important;text-shadow: none;border-bottom: 0.08em solid #770077;}
+
+dt.dt_hide {margin:0.1em;padding:0.1em;text-decoration:none;}
+dt.dt_show {margin:0.1em;padding:0.1em;text-decoration:none;}
+dt:before,
+dt.dt_hide:before {content:"►";display:inline-block;margin:0 0 0.1em 0.3em; padding:0.1em 0.6em 0.1em 0.6em !important;border:0.08em solid #987;background-color:#ede;color:#770077;font:0.95em "Courier New", Monospace;text-align:center;text-shadow:none;}
+dt.dt_show:before {content:"▼";display:inline-block;margin:0 0 0.1em 0.3em; padding:0.1em 0.6em 0.1em 0.6em !important;border:0.08em solid #987;background-color:#770077;color:#ede;font:0.95em "Courier New", Monospace;text-align:center;text-shadow:none;}
+/*
+dt:after,
+dt.dt_hide:after {content:"Mehr..";  margin:0; padding:3px 0.3em 0.1em 0.3em;color: #ddd;font:0.7em "Courier New", Monospace;}
+dt.dt_show:after {content:"Verbergen";margin:0; padding:3px 0.1em 0.1em 0.08em;color: #ddd;font:0.7em "Times New Roman",Serif;}
+*/
+
+dl dd {clear:both !important;display: block;
+margin: 0.5em 0 1.4em 1.1em;
+margin: 0.5em 0 1.4em 0.3em;
+line-height: 1.1em;
+}
+
+
+ul { clear:both;list-style-type: circle;margin: 0 0.3em 0 0.4em;padding:0.3em 0;color: #000;}
+ol { clear:both;list-style-type:decimal;margin: 0 0.3em 0 0.4em;padding: 0;font-size: 1.1em; }
+
+ol li { color: #2f4f4f;list-style-position:outside;font-size: inherit;line-height: 1.1em;padding: 0.1em 0.1em 0.1em 0;margin: 0.08em 0 0.08em 50.4em;}
+ul li  { color: #2f4f4f;list-style-position:outside;font-size: 1.1em; line-height: 1.1em;padding: 0.1em 0 0.1em 0.3em !important;margin: 0.1em 0 0.08em 10.3em !important;}
+ul li p {clear:both;margin-left: 0 !important;padding-left: 0 !important;background-color:#fff;color: #424;font: normal 1.05em "Zapf Dingbats",sans-serif;}
+ul li ul, ol li ol, dl dd dl {margin: 0.4em 0 0 1.1em !important;margin:0;line-height: 1.1em;}
+
+hr {margin:0.08em auto; width:38%; text-align:center;height: 0.1em; border:0.4em dotted #fff; background: #eee;}
+p.small, pre.small { font:normal 0.8em/0.8em "Courier New", "Everson Mono", monospace, serif;letter-spacing: -0.08em;word-spacing:-0.08em;}
+
+.signet,.signet:link,button,.button:link {display:inline-block;padding:0.2em;margin:0.1em;
+font: normal 1.1em "Zapf Dingbats",sans-serif;text-align:center;vertical-align:middle;border-radius:0.3em;
+}
+.signet,.signet:link{width:2em;color: #fff !important;background-color: #770077 !important;}
+.signet:hover {color: #fff !important;background-color: #770077;}
+.button,.button:link {width:18em;color: #fff; background-color: #770077 !important;}
+.button:hover,.button:link:hover{ color: #fff; background-color: #770077;}
+
+.pointer {cursor: pointer;}
+.overflow_hidden{ overflow:hidden; }
+
+.border_left {border-left: 0.08em solid #aaa !important;}
+.border_bottom {border-bottom: 0.08em solid #aaa !important;}
+.border_none {border: none !important;}
+
+.inline {display: inline;}
+.inline_block {display: inline-block;}
+.float_left {float:left !important;}
+.float_right {float:right;}
+.float_clear_null {clear:both;overflow:hidden;visibility:hidden;width:0;height:0;}
+
+.center {text-align: center;}
+.right { text-align: right;}
+.halbzeilig {line-height:0.5em;letter-spacing:0;text-decoration:none;}
+
+.italic {font-style:italic;}
+.font_serif {font-family:"Times New Roman",Times,Palatino,Garamond,Georgia,Arial,"Book Antiqua",serif;}
+.font_sans_serif {font-family:"Zapf Dingbats", sans-serif; }
+.font_monospace {font-family:"Courier New" , "Lucida Console",Monaco,monospace;}
+.font_cursiv {font-family:"Comic Sans MS",cursive; }
+.font_fett {font-family:verdana,sans-serif;}
+.font_fantasy {font-family:Pristina,Ravie,fantasy;}
+.margin0{margin:0;}
+.padding0{padding:0;}
+
+.bg_inherit {background: inherit !important;}
+.col_white {color:#fff !important;}
+.col_char {color:#3f3f41 !important;}
+.col_grau {color:silver !important;}
+.col_orange {color: #770077 !important;}
+.col_blau {color: #770077 !important;}
+
+.white {color: #3f3f41 !important;background-color: #fff !important;}
+.black {color: #fff !important;background-color: #000 !important;}
+.blau {color: #fff !important;background-color: #770077 !important;}
+.blau1 {color: #3f3f41 !important;background-color: #d8e4f7 !important;}
+.rot {color: #fff !important;background-color: #a90a08 !important;}
+.gruen {color: #fff !important;background-color: #770077 !important;}
+.gruen1 {color: #000 !important;background-color: #cff5a8 !important;}
+.braun {color: #fff !important;background-color: #826647 !important;}
+.grau {color: #000 !important;background-color: #fbfafd !important;}
+.grau0 {color: #fff !important;background-color: #987 !important;}
+.grau1 {color: #ccc !important;background-color: #f8fafe !important;}
+.grau2 {color: #2f4f4f !important;background-color: #f8f8f8 !important;}
+.grau3 {color: #2f4f4f !important;background-color: #f0f0f0 !important;}
+.grau4 {color: #224 !important;background-color: #eeecee !important;}
+
+}
+
+/*
+@media aural {
+   h1, h2, h3 { stress: 20; richness: 90; } 
+   .hide { speak: none; } 
+   p.copyright { volume: x-soft; speech-rate: x-fast; } 
+   pre { speak-punctuation: code; }  
+   dt { pause-before: 20%; } 
+ }
+ */

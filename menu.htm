@@ -1,0 +1,90 @@
+﻿<!DOCTYPE html>
+<html lang="de">
+<head>
+<title> ECMAScript-Applikationen SS 2016</title>
+<meta charset="utf-8" />
+<meta name="robots" content="noindex" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="stylesheet" href="./kern/esa.css" />
+<style id="STYLE_MOBIL">
+/*
+br {display:none;}
+h1 { font-size:2.5em;}
+dl dt {font-size:2em;border-bottom:1px solid #ccc;}
+dl dd a{ display:inline-block;font-size:1.5em !important; width:15em;}
+dl dd a:hover { background-color:#cce !important;}
+.button{width:100%;color:#fff !important;}
+*/
+</style>
+<script>
+  window.onload = function () {
+    var menu_style_mobil = document.getElementById("STYLE_MOBIL");
+
+    if (top && top["bib"]) { //  |accordeon, use_forms: 0 }); }
+      top.bib.dl({ doc: document, id: 'DL1', show_idx: [2], add_content: 'set_plus_minus_button' });
+      if (top.bib.is_mobil()) { // STYLE_MOBIL on durch Beseitigen der Kommentar-zeichen 
+        document.getElementById("STYLE_MOBIL").innerHTML = menu_style_mobil.innerHTML.replace(/\/\*([\s\S]+)\*\//g, "$1");
+      }
+    }
+    document.getElementById("pc_menu").style.display = "block";
+    if (top.bib.get_frame_name(document) === "FRAME_INFO") {
+      document.getElementById("smartphon_menu").style.display = "none";
+      document.getElementById("pc_menu").style.display = "block";
+    } else {
+      document.getElementById("smartphon_menu").style.display = "block";
+      document.getElementById("pc_menu").style.display = "none";
+    }
+  };
+</script>
+</head>
+<body>
+
+<h1>&nbsp;&nbsp; E S A </h1>
+<p>
+<a id="smartphon_menu" target="_top" style="display:block;"href='m.htm'>&nbsp; Verwende Smartphon </a>
+<a id="pc_menu" target="_top" style="display:none;"href='index.htm'>&nbsp; Verwende PC-Website </a>
+</p>
+
+
+<dl id="DL1"><dt role="button" tabindex="0" title="Einführung zu ESA"> Einführung 
+</dt><dd> 
+      <a class="" target="FRAME_INFO" href='./kern/willkommen.htm'> Willkommen </a>
+<br /><a class="" target="FRAME_INFO" href='./kern/impressum.htm'> Impressum </a>
+<br /><a class="" target="FRAME_INFO" href='./kern/copyright.htm'> Copyright </a>
+<br /><a class="" target="FRAME_INFO" href='./kern/danksagung.htm'> Danksagung </a>
+
+
+
+</dd><dt role="button" tabindex="0"> Lösungen
+</dt><dd>
+<a class="" target="FRAME_INFO" href='./apps/aktivitaeten.htm'> Aktivitäten-Liste</a>
+<br /><a class="" target="FRAME_INFO"  href="./apps/app-1.htm"> Lösung 1</a>
+<br /><a class="" target="FRAME_INFO"  href="./apps/app-2.htm"> Lösung 2</a>
+<br /><a class="" target="FRAME_INFO"  href="./apps/app-3.htm"> Lösung 3</a>
+<br /><a class="" target="FRAME_INFO"  href="./apps/app-4.htm"> Lösung 4</a>
+<br /><a class="" target="FRAME_INFO"  href="./apps/app-5.htm"> Lösung 5</a>
+<br /><a class="" target="FRAME_INFO"  href="./apps/app-6.htm"> Lösung 6</a>
+<br /><a class="" target="FRAME_INFO"  href="./apps/app-7.htm"> Lösung 7</a>
+<br /><a class="" target="FRAME_INFO"  href="./apps/app-8.htm"> Lösung 8</a>
+<br /><a class="" target="FRAME_INFO"  href="./apps/app-9.htm"> Lösung 9</a>
+<br /><a class="" target="FRAME_INFO"  href="./apps/app-10.htm"> Lösung 10</a>
+
+
+
+</dd><dt role="button" tabindex="0"> Aufgaben
+</dt><dd> 
+      <a class="extern" target="_blank" href='http://www.cilie.org/esa/prakt-2016/auf-1-2016.htm'> Aufg 1</a>
+      <a class="extern" target="_blank" href='http://www.cilie.org/esa/prakt-2016/auf-2-2016.htm'> Aufg 2</a>
+<br /><a class="extern" target="_blank" href='http://www.cilie.org/esa/prakt-2016/auf-3-2016.htm'> Aufg 3</a>
+      <a class="extern" target="_blank" href='http://www.cilie.org/esa/prakt-2016/auf-4-2016.htm'> Aufg 4</a>
+<br /><a class="extern" target="_blank" href='http://www.cilie.org/esa/prakt-2016/auf-5-2016.htm'> Aufg 5</a> 
+      <a class="extern" target="_blank" href='http://www.cilie.org/esa/prakt-2016/auf-6-2016.htm'> Aufg 6</a>
+<br /><a class="extern" target="_blank" href='http://www.cilie.org/esa/prakt-2016/auf-7-2016.htm'> Aufg 7</a>
+      <a class="extern" target="_blank" href='http://www.cilie.org/esa/prakt-2016/auf-8-2016.htm'> Aufg 8</a>
+<br /><a class="extern" target="_blank" href='http://www.cilie.org/esa/prakt-2016/auf-9-2016.htm'> Aufg 9</a>
+      <a class="extern" target="_blank" href='http://www.cilie.org/esa/prakt-2016/auf-10-2016.htm'> Aufg 10</a>
+
+</dd></dl>
+
+</body>
+</html>

@@ -1,0 +1,253 @@
+﻿
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<title> Text-Transf-App </title>
+<meta charset="UTF-8" />
+<meta name="robots" content="noindex" />
+<meta name="description" lang="de" content="ECMAScript-Praktikum: Ed-App=Editor-Applikation, Web-Etwicklungs-Umgebung, Experimentiee mit Zeichenketten, Template-Sammlung für HTML-, CSS-, ECMAScript-Schnipsel )" />
+<link rel="stylesheet" media="screen" href="../kern/esa.css" />
+<style>
+.umranden,.rand2 {float:left;margin:0.1em;padding-left:0.5em;border:0.1em solid #ccc;}
+a.umranden{width:6em;}
+a.rand2{width:2em;padding-left:1em;}
+select.umranden{width:12em !important;}
+select.umranden:hover{width:12em !important;border:0.08em solid #ddd;}
+textarea {border:0.08em solid #ddd;background-color: #faf8fa;color:#000;resize:vertical;width:99%;}
+</style>
+<script>
+window.onload = function () { // Ausführen, wenn Seite gerendet ist:
+  //if (top["bib"]) { top.bib.dl({ doc: document, id: 'DL1', show_idx: [0] }); }
+};
+
+// Hier kommt mein globaler ECMAScript-Code:
+// ========================================
+var win = window, doc = win.document, popup_win = null, gespeicherte_strings = {};
+
+// Funktionen für locale Speicherungen ( Daten, Strings, Objekte, usw.)
+// ========================================
+function script_tags_restaurieren(str) {
+  return str.replace(/<\/rcs/g, "<\/scr").replace(/<rcs/g, "<scr");
+}
+function script_tags_verstecken(str) {
+  return str.replace(/<\/scr/g, "</rcs").replace(/<scr/g, "<rcs");
+}
+function load_str(key) {
+  var str = gespeicherte_strings[key];
+  return script_tags_restaurieren(str)
+  return r;
+} 
+function store_str(key, val) { gespeicherte_strings[key] = val; } 
+
+// Templates local speichern (mehrzeilige Texte )
+// ==============================================
+store_str("HTML5 (einfaches Muster)", "<!DOCTYPE html>\n<html lang=\"de\">\n<head>\n<title>·Titel </title>\n<meta charset=\"UTF-8\" />\n<meta name=\"robots\" content=\"noindex\" />\n<meta name=\"viewport\" content=\"width=device-width,minimum-scale=1,initial-scale=1\" />\n<link rel=\"canonical\" href=\"http://www.domain.de/pfad/page.htm\" />\n<link rel=\"stylesheet\" href=\"../../kern/frame-info.css\" />\n<style>/* Seiteninterne Styles */</style>\n<rcsipt>/* Seiteninterne Script */</rcsipt>\n          <style>body{opacity:1;}</style>\n<noscript><style>body{opacity:0.3;background:#642;}</style></noscript>\n</head>\n<body>\n\n<h1>·Titel </h1>\n\n<p class=\"p\">·p-Tag </p>\n\n<ul class=\"ul\"><li> ul-li-item 1\n</li><li> ul-li-item 2\n</li><li> ul-li-item 3\n</li></ul> \n\n<p> Validiere mit http://validator.w3.org/check </p>\n\n\n</body>\n</html>");
+store_str("umschlossene Zeichen", "➢|➤|☄|∧|◑|◐|▞|◥|☖|☗|♆|⚶|➢|➤|☄|∧|◑|◐|▞|◥|☖|☗|♆|⚶⑬⑭⑮⑯⑰⑱⑲➀➁➂➃➄➅➆➇➈➉➊➋➌➍➎➏➐➑➒㉑㉒㉓㉔");
+
+// DOM-Zugriffe
+// get_string vom id-DOM-Element var str = get_string("my_id");
+// ==============================================
+function get_string(id) {
+  var node = doc.getElementById(id), tn = node.tagName.toLowerCase(), r = "";
+  if (tn === 'input' || tn === 'textarea') { r = node.value; } else { r = node.innerHTML; }
+  return r; // liefert String zurück
+}
+
+// DOM-Zugriffe
+// set innerHTML-str des DOM-Elementes;  Bsp: var id = "my_id", str="Hallo Welt", set_string(id,str);
+function set_string(id, str) {
+  var node = doc.getElementById(id), tn = node.tagName.toLowerCase();
+  if (tn === 'input' || tn === 'textarea') { node.value=str; } else { node.innerHTML=str; }
+}
+
+// Einfache Anzeigefunktionen win.alert, win.confirm, win.open
+// ==============================================
+function show(str) { win.alert(str); }
+
+// Zeige str als Vorschau im popup-Fenster an
+// Bsp:  popup(str) oder popup(null,url)
+function popup(str, url, o) {
+  o = o || { top: 20, left: 150, width: 800, height: 600 };
+  flags = "resizable=yes,scrollbars=yes,top=" + o.top + ",left=" + o.left + ",width=" + o.width + ",height=" + o.height;
+  if (popup_win) { popup_win.close(); } popup_win = null;
+  if (url) { popup_win = win.open(url, "popup", flags);
+  } else { // global: popup_win 
+    popup_win = win.open("", "popup", flags);
+    popup_win.document.write(str);
+  }
+  if (popup_win.opener) { popup_win.opener = self; }
+  if (popup_win.focus) { popup_win.focus(); }
+  return popup_win;
+}
+
+// str = JSON.stringify(obj); obj=JSON.parse(str);
+// ==============================================
+function json_stringify(obj) { 
+  var r = "";
+  try { r = JSON.stringify(obj); } catch (e) { alert(e); }
+  return r;
+}
+function json_parse(str) { 
+  var r = "";
+  try { r = JSON.parse(str); } catch (e) { alert(e); }
+  return r;
+}
+// Unfertige Beispiele zum Ausprobieren
+// ==============================================
+// mache Template aus mehrzeiligen Text
+function mache_load_str_code(id_src, id_dst) { 
+  var r, utf8 = get_string(id_src), r = json_stringify(utf8),
+  pre = 'store_str("my_key_name",', post = ');';
+  set_string(id_dst, pre + script_tags_verstecken(r) + post);
+}
+function teste_load_str_code(id_src, id_dst) {
+  var utf8 = get_string(id_src), r;
+  r = utf8.replace(/^[\s\S]*?store_str[\s\S]*?,/, '').replace(/([\s\S]*?)"\s*\)\s*;$/, '$1"');
+  r = script_tags_restaurieren(r);
+  set_string(id_dst, json_parse(r));
+}
+
+// css_code_pretty und css_code_mini
+// ==============================================
+// mache Template aus mehrzeiligen Text
+function css_code_pretty(id_src, id_dst) {
+  var space = "  ", i, a, deep = 0, r = '', shift = ['\n'], src = get_string(id_src) || "";
+  for (i = 0; i < 100; i += 1) { shift.push(shift[i] + space); }
+  a = src.replace(/\s{1,}/g, ' ').replace(/\{/g, "{~0oO~").replace(/\}/g, "~0oO~}~0oO~")
+.replace(/\;/g, ";~0oO~").replace(/\/\*/g, "~0oO~/*").replace(/\*\//g, "*/~0oO~").replace(/~0oO~\s{0,}~0oO~/g, "~0oO~").split('~0oO~');
+  for (i = 0; i < a.length; i += 1) {
+    if (/\{/.exec(a[i])) {
+      r += shift[deep++] + a[i];
+    } else if (/\}/.exec(a[i])) {
+      r += shift[--deep] + a[i];
+    } else if (/\*\\/.exec(a[i])) {
+      r += shift[deep] + a[i];
+    } else {
+      r += shift[deep] + a[i];
+    }
+  } r = r.replace(/^\n{1,}/, ''); set_string(id_dst, r);
+}
+function css_code_mini(id_src, id_dst) {
+  var preserveComments = 0, src = get_string(id_src) || "";
+  var r = preserveComments ? src : src.replace(/\/\*([^*]|[\r\n]|(\*+([^*\/]|[\r\n])))*\*+\//g, "");
+  r = r.replace(/\s{1,}/g, ' ').replace(/\{\s{1,}/g, "{").replace(/\}\s{1,}/g, "}").replace(/\;\s{1,}/g, ";").replace(/\/\*\s{1,}/g, "/*").replace(/\*\/\s{1,}/g, "*/");
+  set_string(id_dst, r);
+}
+
+// extrahiere a-Tags aus Quelltext
+// ==============================================
+function extrahiere_a_tags(id_src, id_dst) {
+var ok, tit = "", h1 = "", str = get_string(id_src), atags = [], a = '<a class="extern" target="_blank" href="HREF">\nHTML\n<\/a><br \/>\n';
+ok = /<h1/.test(str); if (ok) { h1 = str.replace(/^[\s\S]*?<h1[^>]*?>([\s\S]*?)<\/h1[\s\S]+$/, "\n$1\n\n"); }
+ok = /<title/.test(str); if (ok) { tit = str.replace(/^[\s\S]*?<title[^>]*?>([\s\S]*?)<\/title[\s\S]+$/, "\n$1\n\n"); }
+str.replace(/\s+\=/g, "").replace(/\=\s+/g, "").replace(/>\s+/g, ">").replace(/\s+</g, "<").replace(/<a\s[\s\S]*?href\=("|')([\s\S]*?)("|')[^>]*?>([\s\S]*?)<\/a>/g,
+  function (t0, t1, t2, t3, t4) { atags.push(a.replace("HREF", t2).replace("HTML", t4)); }
+);
+set_string(id_dst, h1 + tit + atags.join("\n"));
+}
+</script>
+</head>
+<body> <noscript class="rot">Diese Seite braucht Browser mit aktivierten JavaScript</noscript>
+
+<h1> Text-Transf-App </h1>
+
+<dl id="DL1"><dt> Text-Manipulationen
+<dfn> Ed-App </dfn>
+</dt><dd>
+<form action="#" onsubmit="return false;">
+
+<div style="padding:0.3em;"><!-- vor der "TA0" -->
+<a class="umranden" href="javascript:void(0)" onclick="popup(get_string('TA0'));">&nbsp; Vorschau &nbsp;</a>
+
+
+<select size="1" class="umranden" 
+  onchange="try{eval(this.options[this.selectedIndex].value);this.selectedIndex=0;}catch(e){show(e);}">
+<option value="void(0)"> String-Funktionen </option>
+<optgroup label="escape()/unescape()">
+  <option value="set_string('TA1',json_stringify(get_string('TA0')))"> TA1 := json_stringify('TA0') </option>
+  <option value="alert(get_string('TA0').length)"> Anzahl Zeichen in TA1 </option>
+
+  <option value="set_string('TA1',json_parse(get_string('TA0')))"> TA1 := json_parse('TA0') </option>
+
+  <option value="set_string('TA1',escape(get_string('TA0')))"> TA1 := escape('TA0') </option>
+  <option value="set_string('TA1',unescape(get_string('TA0')))"> TA1 := unescape('TA0') </option>
+</optgroup></select>
+
+
+<select size="1" class="umranden" 
+  onchange="try{eval(this.options[this.selectedIndex].value);this.selectedIndex=0;}catch(e){show(e);}">
+<option value="void(0)"> String-Manipulationen </option>
+<optgroup label='mache Code für load_str("my_key_name","...JSON-stringify-zeichen"); '>
+  <option value='mache_load_str_code("TA0","TA1")'> TA1 := Mache aus TA0-Text den load_str('mykey')-Code </option>
+  <option value='teste_load_str_code("TA0","TA1")'> TA1 := Teste den TA0-load_str('mykey')-Code </option>
+<optgroup label='extrahiere Textmuster'>
+  <option value='extrahiere_a_tags("TA0","TA1")'> TA1 := extrahiere aus TA0 alle a-Tags </option>
+<optgroup label='CSS-Code pretty bzw. mini schreiben'>
+  <option value='css_code_pretty("TA0","TA1")'> TA1 := CSS-code-pretty(TA0) </option>
+  <option value='css_code_mini("TA0","TA1")'> TA1 := CSS-code-mini(TA0) </option>
+</optgroup></select>
+</div>
+
+<textarea id="TA0" cols="90" rows="15">Dies
+ist
+id="TA0"
+</textarea> &nbsp;
+
+
+<div style="padding:0.3em;"><!-- vor der "TA1" -->
+
+<a class="umranden" href="javascript:void(0)" onclick="popup(get_string('TA1'));">&nbsp; Vorschau &nbsp;</a>
+
+<a class="rand2" href="javascript:void(0);" onclick="set_string('TA1',get_string('TA0'));"> ↓ </a> &nbsp;
+<a class="rand2" href="javascript:void(0);" onclick="var ta0=get_string('TA0'),ta1=get_string('TA1');set_string('TA1',ta0);set_string('TA0',ta1);"> ↑↓ </a> &nbsp;
+<a class="rand2" href="javascript:void(0);" onclick="set_string('TA0',get_string('TA1'));"> ↑ </a> &nbsp;
+
+<select size="1" class="umranden" 
+        onchange="try{eval(this.options[this.selectedIndex].value);this.selectedIndex=0;}catch(e){show(e);}">
+  <option value="void(0)"> Textmuster </option>
+<optgroup label="HTML5-Templates">
+  <option value='show("????")' class="rot"> Zeige Zeichenanzahl von TA0 </option>
+  <!--
+  ungünstig bei mehrzeiligem Text ist 
+  <option value="set_string('TA1','➢|➤|☄|∧|◑|◐|▞|◥|☖|☗|♆|⚶ a5=A|➢|➤|☄|∧|◑|◐|▞|◥|☖|☗|♆|⚶⑬⑭⑮⑯⑰⑱⑲➀➁➂➃➄➅➆➇➈➉➊➋➌➍➎➏➐➑➒㉑㉒㉓㉔')"> Umschlossene Zeichen </option>
+  -->
+  <option value='set_string("TA1",load_str("umschlossene Zeichen"))'> Umschlossene Zeichen </option>
+  <option value='set_string("TA1",load_str("HTML5 (einfaches Muster)"))'> HTML5 (einfaches Muster) </option>
+</optgroup><optgroup label="CSS3-Templates ...">
+  <option value='set_string("TA1","CSS3 ???????")' class="rot"> ??????? Hierher CSS3-Beispiele </option>
+</optgroup><optgroup label="ECMAScript-Templates ...">
+  <option value='set_string("TA1","script-tag ???????")' class="rot"> ??????? Hierher script-tag </option>
+  <option value='set_string("TA1","script-Beispiele ???????")' class="rot"> Hierher script-Beispiele </option>
+</optgroup></select>
+</div>
+
+<textarea id="TA1" class="umranden" cols="90" rows="4">
+<h1> Teste script-Code </h1>
+<script>
+  var i, obj = {}, arr = [];
+  var str = "Script-Code\nin id='TA1'";
+  alert(str);
+  window.onload = function () { }
+</script>
+</textarea>
+</form>
+
+
+</dd><dt> Bedienungshinweise
+<dfn>Help </dfn>
+</dt><dd> 
+<p>
+Das Zeichenketten-Toolchen ist für Web-Entwickler,
+kann Zeichenketten in unterschiedliche Darstellungen wandeln
+und als Template-Toolchen Code- und Text-Schnipsel zur Verfügung stellen.
+</p>
+<p>
+Die obere Textarea id="TA0" dient i.a. als Eingabe und die untere Textarea id="TA1" als Ausgabe.
+Das Ergebnis kann als Browser-Vorschau angezeigt werden.
+</p>
+
+
+</dd></dl>
+
+
+</body></html>
