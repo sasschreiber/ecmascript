@@ -151,7 +151,51 @@ set_string(id_dst, h1 + tit + atags.join("\n"));
 //------------ Custom code sschreiber ----------------
 //----------------------------------------------------
 
+function stringToHtmlTable(id_src, id_dst, separator = "|") {
+	var input = get_string(id_src), table = [], maxCols = 0, outputString = "";
 
+	//Take inputstring apart into an array of rows and cols
+	var rows = input.split("\n");
+	rows.forEach(function(row) {
+		if (row.trim() != "") {
+			cols = row.split(separator);
+			
+			table.push(cols);
+			if (cols.length > maxCols) {
+				maxCols = cols.length;
+			}
+		}
+	});
+
+	outputString = "<table>\n";
+	table.forEach(function(row, rowindex) {
+		outputString += "\t<tr>\n";
+		row.forEach(function(col, colindex) {
+			if (rowindex == 0) {
+				outputString += "\t\t<th>" + col.trim() + "</th>\n";
+			}
+			else {
+				outputString += "\t\t<td>" + col.trim() + "</td>\n";
+			}
+		});
+		if (row.length < maxCols) {
+			for (i=0; i<(maxCols-row.length); i++) {
+				if (rowindex == 0) {
+					outputString += "\t\t<th></th>\n";
+				}
+				else {
+					outputString += "\t\t<td></td>\n";
+				}				
+			}
+		}
+		outputString += "\t</tr>\n";
+
+	});
+	outputString += "</table>\n";
+	set_string(id_dst, outputString);
+
+
+}
 
 
 
@@ -221,12 +265,18 @@ set_string(id_dst, h1 + tit + atags.join("\n"));
 <optgroup label='CSS-Code pretty bzw. mini schreiben'>
   <option value='css_code_pretty("TA0","TA1")'> TA1 := CSS-code-pretty(TA0) </option>
   <option value='css_code_mini("TA0","TA1")'> TA1 := CSS-code-mini(TA0) </option>
-</optgroup></select>
+</optgroup>
+<optgroup label="HTML-Converter">
+	<option value='stringToHtmlTable("TA0", "TA1")'>Make HTML table (TA0 -> TA1)</option>
+
+</optgroup>
+
+
+</select>
 </div>
 
-<textarea id="TA0" cols="90" rows="15">Dies
-ist
-id="TA0"
+<textarea id="TA0" cols="90" rows="15">Das ist TA0
+
 </textarea> &nbsp;
 
 
