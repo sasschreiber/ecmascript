@@ -145,6 +145,42 @@ str.replace(/\s+\=/g, "").replace(/\=\s+/g, "").replace(/>\s+/g, ">").replace(/\
 );
 set_string(id_dst, h1 + tit + atags.join("\n"));
 }
+
+
+//----------------------------------------------------
+//------------ Custom code sschreiber ----------------
+//----------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 </script>
 </head>
 <body> <noscript class="rot">Diese Seite braucht Browser mit aktivierten JavaScript</noscript>
@@ -206,7 +242,7 @@ id="TA0"
         onchange="try{eval(this.options[this.selectedIndex].value);this.selectedIndex=0;}catch(e){show(e);}">
   <option value="void(0)"> Textmuster </option>
 <optgroup label="HTML5-Templates">
-  <option value='show("????")' class="rot"> Zeige Zeichenanzahl von TA0 </option>
+  <option value='show(get_string("TA0").length)' class="rot"> Zeige Zeichenanzahl von TA0 </option>
   <!--
   ungünstig bei mehrzeiligem Text ist 
   <option value="set_string('TA1','➢|➤|☄|∧|◑|◐|▞|◥|☖|☗|♆|⚶ a5=A|➢|➤|☄|∧|◑|◐|▞|◥|☖|☗|♆|⚶⑬⑭⑮⑯⑰⑱⑲➀➁➂➃➄➅➆➇➈➉➊➋➌➍➎➏➐➑➒㉑㉒㉓㉔')"> Umschlossene Zeichen </option>
