@@ -44,6 +44,8 @@ function store_str(key, val) { gespeicherte_strings[key] = val; }
 store_str("HTML5 (einfaches Muster)", "<!DOCTYPE html>\n<html lang=\"de\">\n<head>\n<title>·Titel </title>\n<meta charset=\"UTF-8\" />\n<meta name=\"robots\" content=\"noindex\" />\n<meta name=\"viewport\" content=\"width=device-width,minimum-scale=1,initial-scale=1\" />\n<link rel=\"canonical\" href=\"http://www.domain.de/pfad/page.htm\" />\n<link rel=\"stylesheet\" href=\"../../kern/frame-info.css\" />\n<style>/* Seiteninterne Styles */</style>\n<rcsipt>/* Seiteninterne Script */</rcsipt>\n          <style>body{opacity:1;}</style>\n<noscript><style>body{opacity:0.3;background:#642;}</style></noscript>\n</head>\n<body>\n\n<h1>·Titel </h1>\n\n<p class=\"p\">·p-Tag </p>\n\n<ul class=\"ul\"><li> ul-li-item 1\n</li><li> ul-li-item 2\n</li><li> ul-li-item 3\n</li></ul> \n\n<p> Validiere mit http://validator.w3.org/check </p>\n\n\n</body>\n</html>");
 store_str("umschlossene Zeichen", "➢|➤|☄|∧|◑|◐|▞|◥|☖|☗|♆|⚶|➢|➤|☄|∧|◑|◐|▞|◥|☖|☗|♆|⚶⑬⑭⑮⑯⑰⑱⑲➀➁➂➃➄➅➆➇➈➉➊➋➌➍➎➏➐➑➒㉑㉒㉓㉔");
 
+store_str("XLIFF Datei (Template)", '<?xml version="1.0" encoding="UTF-8"?>\n<xliff version="1.0">\n\t<file source-language="en" target-language="de" datatype="plaintext" original="messages" date="[date]" product-name="[product]">\n\t\t<header/>\n\t\t<body>\n\t\t\t<trans-unit id="[id]">\n\t\t\t\t<source>[source-text]</source>\n\t\t\t\t<target>[target-text]</target>\n\t\t\t</trans-unit>\n\t\t</body>\n \t</file>\n</xliff>\n');
+
 // DOM-Zugriffe
 // get_string vom id-DOM-Element var str = get_string("my_id");
 // ==============================================
@@ -292,7 +294,7 @@ function stringToHtmlTable(id_src, id_dst, separator = "|") {
         onchange="try{eval(this.options[this.selectedIndex].value);this.selectedIndex=0;}catch(e){show(e);}">
   <option value="void(0)"> Textmuster </option>
 <optgroup label="HTML5-Templates">
-  <option value='show(get_string("TA0").length)' class="rot"> Zeige Zeichenanzahl von TA0 </option>
+  <option value='show(get_string("TA0").length)'> Zeige Zeichenanzahl von TA0 </option>
   <!--
   ungünstig bei mehrzeiligem Text ist 
   <option value="set_string('TA1','➢|➤|☄|∧|◑|◐|▞|◥|☖|☗|♆|⚶ a5=A|➢|➤|☄|∧|◑|◐|▞|◥|☖|☗|♆|⚶⑬⑭⑮⑯⑰⑱⑲➀➁➂➃➄➅➆➇➈➉➊➋➌➍➎➏➐➑➒㉑㉒㉓㉔')"> Umschlossene Zeichen </option>
@@ -304,7 +306,12 @@ function stringToHtmlTable(id_src, id_dst, separator = "|") {
 </optgroup><optgroup label="ECMAScript-Templates ...">
   <option value='set_string("TA1","script-tag ???????")' class="rot"> ??????? Hierher script-tag </option>
   <option value='set_string("TA1","script-Beispiele ???????")' class="rot"> Hierher script-Beispiele </option>
-</optgroup></select>
+</optgroup>
+<optgroup label="Andere Web-Templates">
+	<option value='set_string("TA1", load_str("XLIFF Datei (Template)"))'>XLIFF Sprachdatei Template</option>
+</optgroup>
+
+</select>
 </div>
 
 <textarea id="TA1" class="umranden" cols="90" rows="4">
