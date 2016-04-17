@@ -199,6 +199,17 @@ function stringToHtmlTable(id_src, id_dst, separator = "|") {
 
 }
 
+function stringToHtmlList(id_src, id_dst) {
+	var input = get_string(id_src);
+
+	//Convert to lis, set start and end ul tags afterwards
+	var output = input.replace(/(^-\s)(\w*)$/mg, function(match, p1, p2) {
+		return "<li>" + p2 + "</li>";
+	}).replace(/\n\n<li>/, "<ul><li>").replace(/<\/li>\n\n/, "</li></ul>");
+
+	set_string(id_dst, output);
+
+}
 
 
 
@@ -273,6 +284,7 @@ function stringToHtmlTable(id_src, id_dst, separator = "|") {
 </optgroup>
 <optgroup label="HTML-Converter">
 	<option value='stringToHtmlTable("TA0", "TA1")'>Make HTML table (TA0 -> TA1)</option>
+	<option value='stringToHtmlList("TA0", "TA1")'>Make HTML list (TA0 -> TA1)</option>
 
 </optgroup>
 
