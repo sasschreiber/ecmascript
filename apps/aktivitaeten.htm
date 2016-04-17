@@ -45,17 +45,76 @@ Die Augabenstellung zum ersten ESA-Projekt ist zu finden unter
 <dfn> Homepage einrichten und Ed-App </dfn>
 </dt><dd>
 <p>
-Bei der 1. Aufgabe ging es darum, <span class="rot">...</span>
+Die erste Aufgabe befasst sich mit String-Funktionen, es sollten verschiedene Funktionen zum manipulieren von Strings ausprobiert und sinnvoll genutzt werden.<br>
+Hierfür stand bereits ein Template mit zwei Textareas zur Verfügung, die mit den neuen Funktionen manipuliert werden konnten.
 
 </p>
 <p>
-Es wurden folgende Schritte durchgeführt
+Folgende Funktionen wurden neu hinzugefügt:
 </p>
-<ul class="dir"><li> Zunächst wurden die besprochenen <span class="rot">...</span>
-</li><li> dann <span class="rot">...</span>
-</li><li> weiterhin wurden <span class="rot">...</span>
-</li><li> ...
-</li></ul>
+<ul class="dir">
+	<li>Ein Zeichen-Counter für TA0</li>
+	<li>Test einfacher String-Funktionen mit repeat() und trim()</li>
+	<li>Ein Template für XLIFF-Sprachdateien zur schnellen Verwendung</li>
+	<li>Ein Tabellenkonverter, mit dem sich in "Kurzschreibweise" HTML-Tabellen bauen lassen</li>
+	<li>Ein Listenkonverter, der mit regulären Ausdrücken Listen in Texten zu HTML-Listen konvertiert</li>
+</ul>
+
+<p><b>Tabellenkonverter</b><br><br>
+Mit dem Tabellenkonverter kann man schnell Tabellen zeilenweise und mit einem einfachen Trennzeichen (|) herunterschreiben.<br>
+Der Konverter fügt dann alle Tags hinzu. 
+Beispiel Eingabe:</p>
+
+<pre>
+Tier | Größe
+Hund | mittel
+Katze | klein
+Pferd | groß
+</pre>
+<p>
+Ergibt folgende Ausgabe:
+</p>
+<pre>
+&lt;table&gt;
+	&lt;tr&gt;
+		&lt;th&gt;Tier&lt;/th&gt;
+		&lt;th&gt;Gr&ouml;&szlig;e&lt;/th&gt;
+	&lt;/tr&gt;
+	&lt;tr&gt;
+		&lt;td&gt;Hund&lt;/td&gt;
+		&lt;td&gt;mittel&lt;/td&gt;
+	&lt;/tr&gt;
+	&lt;tr&gt;
+		&lt;td&gt;Katze&lt;/td&gt;
+		&lt;td&gt;klein&lt;/td&gt;
+	&lt;/tr&gt;
+	&lt;tr&gt;
+		&lt;td&gt;Pferd&lt;/td&gt;
+		&lt;td&gt;gro&szlig;&lt;/td&gt;
+	&lt;/tr&gt;
+&lt;/table&gt;
+</pre>
+
+<p><b>Listenkonverter</b><br><br>
+Der Listenkonverter ersetzt einfache Listen durch HTML-Listen und nutzt dafür reguläre Ausdrücke.
+Beispiel Eingabe:</p>
+<pre>
+Das ist eine Liste:
+
+- Punkt1
+- Punkt2
+- Punkt3
+
+Mehr Text
+</pre>
+<p>Ergibt folgende Ausgabe:</p>
+<pre>
+Das ist eine Liste:&lt;ul&gt;&lt;li&gt;Punkt1&lt;/li&gt;
+&lt;li&gt;Punkt2&lt;/li&gt;
+&lt;li&gt;Punkt3&lt;/li&gt;&lt;/ul&gt;Mehr Text
+
+</pre>
+
 
 
 
