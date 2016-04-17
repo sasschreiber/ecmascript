@@ -247,13 +247,16 @@ function stringToHtmlTable(id_src, id_dst, separator = "|") {
 <option value="void(0)"> String-Funktionen </option>
 <optgroup label="escape()/unescape()">
   <option value="set_string('TA1',json_stringify(get_string('TA0')))"> TA1 := json_stringify('TA0') </option>
-  <option value="alert(get_string('TA0').length)"> Anzahl Zeichen in TA1 </option>
-
   <option value="set_string('TA1',json_parse(get_string('TA0')))"> TA1 := json_parse('TA0') </option>
-
   <option value="set_string('TA1',escape(get_string('TA0')))"> TA1 := escape('TA0') </option>
   <option value="set_string('TA1',unescape(get_string('TA0')))"> TA1 := unescape('TA0') </option>
-</optgroup></select>
+</optgroup>
+<optgroup label="Misc.">
+	<option value="set_string('TA1', get_string('TA0').repeat(3))">TA1 := 3x TA0 (repeat)</option>
+	<option value="set_string('TA1', get_string('TA0').trim())">TA1 := TA0.trim()</option>
+
+</optgroup>
+</select>
 
 
 <select size="1" class="umranden" 
