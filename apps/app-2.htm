@@ -6,20 +6,134 @@
 <meta name="robots" content="noindex" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="stylesheet" href="../kern/esa.css" />
-<script>  
+<link rel="stylesheet" href="../kern/additions.css" />
+<script>
+"use strict";
 window.onload = function () {
   //if (top["bib"]) { top.bib.dl({ doc: document, id: 'DL1', show_idx: [ ] }); } 
 };
+var gespeicherte_strings = {};
+
+function store_str(key, val) { gespeicherte_strings[key] = val; } 
+
+function load_str(key) {
+  var str = gespeicherte_strings[key];
+  return str;
+} 
+
+function htmlEntities(str) {
+    return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+}
+
+store_str("post-template", `
+<article style="position: absolute; top: {posY}px; left: {posX}px">
+  <header>
+    <address>Autor: {author}</address>
+    <h3>{title}</h3>
+  </header>
+  <p>{content}</p>
+</article>
+`);
+
+
+function post() {
+	"use strict";
+	var inputtext = document.getElementById("post-input").value;
+	var authortext = document.getElementById("post-author").value;
+	var titletext = document.getElementById("post-title").value;
+	var posX = document.getElementById("post-posx").value;
+	var posY = document.getElementById("post-posy").value;
+	
+
+
+	if (inputtext !== "") {
+		var output = createPostFromTemplate(
+			{
+				"content" : inputtext,
+				"author" : htmlEntities(authortext),
+				"title" : htmlEntities(titletext),
+				"posX" : parseInt(posX),
+				"posY" : parseInt(posY)
+			}
+			);
+		var postElement = document.createElement("div");
+		postElement.innerHTML = output;
+		document.getElementById("posting-wall").appendChild(postElement);
+
+		document.getElementById("post-input").value = "";
+		document.getElementById("post-author").value = "";
+		document.getElementById("post-title").value = "";
+
+	}
+
+}
+
+function createPostFromTemplate(replacements) {
+	"use strict";
+	var template = load_str("post-template"), key;
+
+	//Alle Marker ersetzen, die vorkommen
+	for (key in replacements) {
+		template = template.replace(new RegExp("{" + key + "}", "g"), replacements[key]);
+	}
+	return template;
+}
+
+function togglePostForm() {
+	"use strict";
+	var postForm = document.getElementById("post-form");
+	var toggleSpan = document.getElementById("toggle-span");
+
+	if (postForm.hasAttribute("hidden")) {
+		postForm.removeAttribute("hidden");
+		toggleSpan.innerHTML = "Hide";
+
+	}
+	else {
+		postForm.setAttribute("hidden", "");
+		toggleSpan.innerHTML = "Show";
+	}
+}
+
+
 </script>
 </head>
 <body>
 
 
-<h1> ... App 2 
+<h1> Posting-App 
 </h1>
 
-<p class="float_right rot">IN BEARBEITUNG</p>
 
+<div id="posting-wall" style="position: absolute; top: 50px; left: 0px; width: 100%; height: 100%; z-index: 1;">
+
+<div id="control-panel" >
+	<div class="panel-header">
+		<h2>Control-Panel <span onclick="togglePostForm()" id="toggle-span">Hide</span></h2>
+	</div>
+	<form id="post-form" onsubmit="event.preventDefault(); post();">
+		<label for="post-author">Name</label>
+		<input type="text" id="post-author" name="post-author" value="Autor"></input>
+
+		<label for="post-title">Title</label>
+		<input type="text" id="post-title" name="post-title" value="Testtitel"></input>
+
+		<label for="post-input">What do you want to say?</label>
+		<textarea id="post-input" name="post-input" rows="8">Das ist ein Text.</textarea>
+
+		<label for="post-title">Position X</label>
+		<input type="text" id="post-posx" name="post-posx" value="400"></input>
+
+		<label for="post-title">Position Y</label>
+		<input type="text" id="post-posy" name="post-posy" value="50"></input>
+
+		<button type="submit" id="post-submit">Posten</button>
+	</form>
+
+</div>
+
+
+</div>
 
 
 </body>

@@ -1,0 +1,39 @@
+*[hidden] { display: none; }
+
+#posting-wall article {
+	max-width: 300px;
+	background-color: #FFF;
+	padding: 10px;
+	box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.37);
+	font-family: Arial;
+
+}
+
+#posting-wall article p {
+	margin: 0px;
+}
+
+#control-panel {
+	background-color: #FFF;
+	width: 270px;
+	margin: 10px;
+	z-index: 1000;
+	padding: 10px;
+	box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.37);
+	font-family: Arial;
+	position: relative;
+}
+
+#control-panel .panel-header h2 {
+	margin: 0px 0px 10px 0px;
+	font-size: 24px;
+}
+
+#control-panel .panel-header span {
+	display: block;
+	position: absolute;
+	top: 10px;
+	right: 10px;
+	font-size: 16px;
+	cursor: pointer;
+}

@@ -122,8 +122,23 @@ Das ist eine Liste:&lt;ul&gt;&lt;li&gt;Punkt1&lt;/li&gt;
 
 
 </dd><dt> 2. Projekt bis 2016-04-25
-<dfn> <span class="rot">DEMNÄCHST</span> </dfn>
+<dfn> Posting-App</dfn>
 </dt><dd>
+<p>Mit der Posting-App können wie auf einer Pinnwand "Posts" erstellt und positioniert werden.</p>
+<p>Hierfür steht ein eigenes Control Panel bereit.</p>
+<p>Intern werden die Felder per RegEx in ein vorgegebenes Template geparst.</p>
+<p>Das Template sieht so aus:</p>
+<pre>
+&#x3C;article style=&#x22;position: absolute; top: {posY}px; left: {posX}px&#x22;&#x3E;
+  &#x3C;header&#x3E;
+    &#x3C;address&#x3E;Autor: {author}&#x3C;/address&#x3E;
+    &#x3C;h3&#x3E;{title}&#x3C;/h3&#x3E;
+  &#x3C;/header&#x3E;
+  &#x3C;p&#x3E;{content}&#x3C;/p&#x3E;
+&#x3C;/article&#x3E;
+</pre>
+<p>Marker werden mit {} gekennzeichnet.</p>
+
 
 
 
