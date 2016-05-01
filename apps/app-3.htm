@@ -1,33 +1,125 @@
 ﻿<!DOCTYPE html>
 <html lang="de">
 <head>
-<title> App 3 (Kurvengenerator)</title>
+<title> App 3 (Punktverbinder)</title>
 <meta charset="UTF-8" />
 <meta name="robots" content="noindex" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="stylesheet" href="../kern/esa.css" />
 <link rel="stylesheet" href="../kern/additions.css" />
 <script>
-  window.onload = function () {
-    //if (top["bib"]) { top.bib.dl({ doc: document, id: 'DL1', show_idx: [ ] }); } 
-  };
+	var graph2canvas = (function (window) { 
+		var  doc = window.document;
+
+		function findMax(coordinates) {
+			var xMax = 0, yMax = 0;
+			coordinates.forEach(function(points) {
+				if (points.x > xMax) {
+					xMax = points.x;
+				}
+				if (points.y > yMax) {
+					yMax = points.y;
+				}
+
+			});
+			return {xMax : xMax, yMax : yMax};
+
+		}
+
+		function convertCoordinates(coordinates, canvas) {
+			var output = [], xMin = 0, yMin = 0;
+			var maxValues = graph2canvas.findMax(coordinates);
+			var ctx = canvas.getContext('2d');
+
+			var w = ctx.canvas.width;
+			var h = ctx.canvas.height;
+
+			var dx = maxValues.xMax - xMin;  
+			var dy = maxValues.yMax - yMin;
+			coordinates.forEach(function(points) {
+				output.push({
+					x : Math.round(xMin + points.x * (w/dx)),
+					y : Math.round(h - (yMin + points.y * (h/dy)))
+
+				})
+
+			});
+			return output;
+		}
+
+		function drawPoints(coordinates, canvas) {
+
+			var CTX = canvas.getContext('2d');
+			CTX.strokeStyle = document.getElementById("graph-color").value;
+			CTX.beginPath();
+
+			coordinates.forEach(function(points, count){
+				if (count == 0) {
+					CTX.moveTo(points.x, points.y);
+				} else {
+					CTX.lineTo(points.x, points.y);
+					CTX.stroke();
+
+				}
+
+			});
+			CTX.closePath();
+
+		}
+
+		function createGraph(inputId, canvasId) {
+			var input = document.getElementById(inputId).value;
+			var canvas = document.getElementById(canvasId);
+			var pointArr;
+			coordinates = [];
+			input.split(",").forEach(function(points) {
+				pointArr = points.split(":");
+				coordinates.push({x : parseInt(pointArr[0]), y : parseInt(pointArr[1])});
+
+
+			});
+			coordinates = graph2canvas.sortByKey(coordinates, "x");
+			screenCoordinates = graph2canvas.convertCoordinates(coordinates, canvas);
+			graph2canvas.drawPoints(screenCoordinates, canvas);
+
+
+		}
+
+		// Stackoverflow, sorting arrays by object key
+		// http://stackoverflow.com/questions/8837454/sort-array-of-objects-by-single-key-with-date-value
+		function sortByKey(array, key) {
+		    return array.sort(function(a, b) {
+		        var x = a[key]; var y = b[key];
+		        return ((x < y) ? -1 : ((x > y) ? 1 : 0));
+		    });
+		}
+
+
+	return {convertCoordinates:convertCoordinates, findMax : findMax, drawPoints: drawPoints, createGraph : createGraph, sortByKey : sortByKey};
+	} (window));
+
+
+ window.onload = function () {
+};
 </script>
 </head>
 <body>
 
 
-<h1> Kurvengenerator
+<h1> Punktverbinder
 </h1>
 
-<form id="post-form" onsubmit="event.preventDefault();">
+<form id="post-form" onsubmit="event.preventDefault(); graph2canvas.createGraph('post-input', 'output-canvas');">
 	<label for="post-input">Data input</label><br>
 
-	<textarea id="post-input" name="post-input" rows="8" cols="100">1,3,7,4,9</textarea>
+	<textarea id="post-input" name="post-input" rows="8" cols="100">10:200, 44:125, 12:33, 3:0, 5: 255</textarea>
 	<br><br>
-	<button type="submit" id="post-submit" >Posten</button>
+	<label for="graph-color">Graph color</label><br>
+	<input type="color" name="graph-color" value="#ff0000" id="graph-color"><br><br>
+	<button type="submit" id="post-submit" >Zeichne Graph</button>
 </form>
 <div>
-	<canvas id="output-canvas" width="500" height="200" style="border: 1px solid #DDD;"></canvas>
+	<canvas id="output-canvas" width="700" height="400" style="border: 1px solid #DDD;"></canvas>
 </div>
 
 

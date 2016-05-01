@@ -145,9 +145,14 @@ Das ist eine Liste:&lt;ul&gt;&lt;li&gt;Punkt1&lt;/li&gt;
 
 
 </dd><dt> 3. Projekt bis 2016-05-02
-<dfn> <span class="rot">DEMNÄCHST</span> </dfn>
+<dfn> Punktverbinder</dfn>
 </dt><dd>
+<p>Der Punktverbinder nimmt eine beliebige Reihe von Punkten aus dem Inputfeld, sortiert sie und zeichnet sie als verbundene Linie auf dem Canvas. Die Farbe ist per HTML5 Color Input wählbar, was das Zeichnen mehrer Graphen in einem Canvas erleichtert.</p>
+<p>Dabei findet eine Konversion von echten Koordinaten auf Screen-Koordinaten statt, welche sich dynamisch der Größe des Canvas anpassen kann. Sie sorgt dafür, dass der Canvas immer voll ausgenutzt wird, aber kein Punkt außerhalb liegt.</p>
+<p>Die Punkte müssen folgendes Format haben:</p>
+<pre>x1:y1, x2:y2, x3:y3, (...)</pre>
 
+<p>Für das Sortieren der Punkt-Arrays habe ich einen Code-Schnipsel von Stackoverflow verwendet: <a href="http://stackoverflow.com/questions/8837454/sort-array-of-objects-by-single-key-with-date-value">http://stackoverflow.com/questions/8837454/sort-array-of-objects-by-single-key-with-date-value</a>. Die Funktion ist per Kommentar gekennzeichnet.
 
 
 
