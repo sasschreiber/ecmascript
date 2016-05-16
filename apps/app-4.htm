@@ -97,7 +97,7 @@ var canvashelper = (function (win) {
     	ctx.moveTo(M.i, M.j);
 
     	addPointsToCurrentShape();
-    	console.log("start lines");
+    	//console.log("start lines");
     }
 
     function addLine() {
@@ -105,8 +105,8 @@ var canvashelper = (function (win) {
     	ctx.lineTo(M.i, M.j);
     	ctx.stroke();
     	addPointsToCurrentShape();
-    	console.log(M.i);
-    	console.log(M.j);
+    	//console.log(M.i);
+    	//console.log(M.j);
     }
 
     function endLines() {
@@ -116,11 +116,11 @@ var canvashelper = (function (win) {
 
 
 		saveShapeAndClear();
-		console.log(M.savedShapes);
+		//console.log(M.savedShapes);
 
 		M.finished = true;
 		M.mode = "";
-		console.log("end lines");
+		//console.log("end lines");
     }
 
     function drawer() {
@@ -166,7 +166,7 @@ var canvashelper = (function (win) {
     		output = output + "\n " + createSvg(object);
 
     	});
-    	output = output + "</svg>";
+    	output = output + "\n</svg>";
     	return output;
 
     }
