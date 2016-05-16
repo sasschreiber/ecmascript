@@ -19,8 +19,20 @@ var canvashelper = (function (win) {
         ups: [],
         moves: [],
         A: 4, // Default-Circle-Marker-Radius
-        B: 9 // Default-Quadrat-Marker-Länge
+        B: 9, // Default-Quadrat-Marker-Länge
+        mode : "", //Drawing mode
+        finished : true, //Is current object finished?
+        currentShape : {},
+        savedShapes : []
     }, MAX_MOVE_LEN = 1000, MAX_DOWN_LEN = 200, MAX_UP_LEN = 200;  // Maus-Buffer
+
+    function setMode(newmode) {
+    	M.mode = newmode;
+    }
+
+    function getMode() {
+    	return M.mode;
+    }
 
     function set_prop(obj, o) {// z.B. maus.set_prop(M, {inside:1, is_down:0} )
         var k, key, keys = Object.keys(o);
@@ -70,14 +82,107 @@ var canvashelper = (function (win) {
 
         }, false);
 
-    }    
+    }
+    function startLines() {
+    	M.CTX.strokeStyle = window.document.getElementById("graph-color").value;
+    	M.finished = false;
+    	var ctx = get_ctx(M.ID);
 
-return {get_ctx : get_ctx, set_ctx : set_ctx, add_event : add_event};
+    	M.currentShape = {
+    		stroke : window.document.getElementById("graph-color").value,
+    		points : []
+    	};
+
+    	ctx.beginPath();
+    	ctx.moveTo(M.i, M.j);
+
+    	addPointsToCurrentShape();
+    	console.log("start lines");
+    }
+
+    function addLine() {
+    	var ctx = get_ctx(M.ID);
+    	ctx.lineTo(M.i, M.j);
+    	ctx.stroke();
+    	addPointsToCurrentShape();
+    	console.log(M.i);
+    	console.log(M.j);
+    }
+
+    function endLines() {
+    	var ctx = get_ctx(M.ID);
+    	ctx.closePath();
+		ctx.stroke();
+
+
+		saveShapeAndClear();
+		console.log(M.savedShapes);
+
+		M.finished = true;
+		M.mode = "";
+		console.log("end lines");
+    }
+
+    function drawer() {
+    	var ctx = get_ctx(M.ID);
+    	if (M.mode == "lines") {
+    		if (M.finished == true) {
+    			startLines();
+    		}
+    		else {
+    			addLine();
+    		}
+    	}
+
+    }
+
+
+    function addPointsToCurrentShape() {
+    	M.currentShape.points.push([Math.round(M.i),Math.round(M.j)]);
+
+    }
+
+    function saveShapeAndClear() {
+ 		// Save shape and clear
+		M.savedShapes.push(M.currentShape);
+		M.currentShape = {};   	
+    }
+
+    function dumpSvg() {
+    	var textarea = window.document.getElementById("TA0");
+    	var svgdiv = window.document.getElementById("svg");
+    	var htmltext = createMultipleSvgs(M.savedShapes)
+    	textarea.value = htmltext;
+    	svg.innerHTML = htmltext;
+
+
+    }
+
+    function createMultipleSvgs(objects) {
+    	var output = "";
+    	output = '<svg width="700" height="400" version="1.1" xmlns="http://www.w3.org/2000/svg">';
+
+    	objects.forEach(function(object) {
+    		output = output + "\n " + createSvg(object);
+
+    	});
+    	output = output + "</svg>";
+    	return output;
+
+    }
+
+    function createSvg(shapeObj) {
+    	var output = "";
+    	output = "<polygon stroke-width='1' fill='transparent' stroke='" + shapeObj.stroke + "' points='";
+    	shapeObj.points.forEach(function(point) {
+    		output = output + point[0] + " " + point[1] + " ";
+    	});
+    	output = output + "' />";
+    	return output;
+    }
+
+return {get_ctx : get_ctx, set_ctx : set_ctx, add_event : add_event, drawer : drawer, endLines : endLines, setMode : setMode, dumpSvg : dumpSvg};
 } (window));
-
-function log() {
-	console.log("gfgndkfjng");
-}
 
 
 
@@ -86,8 +191,11 @@ window.onload = function () {
 	// init Maus
 	canvashelper.set_ctx("output-canvas");
 	canvashelper.add_event("mousemove");
-	canvashelper.add_event("mousedown", log);
+	canvashelper.add_event("mousedown", canvashelper.drawer);
 	canvashelper.add_event("mouseup");
+
+
+	
 };
 </script>
 </head>
@@ -98,16 +206,23 @@ window.onload = function () {
 </h1>
 
 <form id="post-form">
-    <label for="graph-color">Graph color</label><br>
+    <label for="graph-color">Stroke color</label><br>
     <input type="color" name="graph-color" value="#ff0000" id="graph-color"><br><br>
+    <button type="button" onclick="canvashelper.setMode('lines');">Start lines</button><br>
+    <button type="button" onclick="canvashelper.endLines();">End lines</button><br>
+    <button type="button" onclick="canvashelper.dumpSvg();">Create SVG</button><br>
 </form>
 <div>
     <canvas id="output-canvas" width="700" height="400" style="border: 1px solid #DDD;"></canvas>
 </div>
+<h4>Output Text</h4>
 <div>
 <textarea id="TA0" cols="60" rows="10"></textarea><br><br>
 </div>
+<h4>Output SVG</h4>
+<div id="svg" style="width: 700px; height: 400px;"></div>
 
+</div>
 
 </body>
 </html>
