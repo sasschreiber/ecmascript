@@ -6,19 +6,107 @@
 <meta name="robots" content="noindex" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="stylesheet" href="../kern/esa.css" />
+<script type="text/javascript" src="../kern/libraries/graph2canvas.js"></script>
 <script>
-  window.onload = function () {
-    //if (top["bib"]) { top.bib.dl({ doc: document, id: 'DL1', show_idx: [ ] }); } 
-  };
+
+var canvashelper = (function (win) {
+    "use strict";
+
+    var doc = win.document, 
+    M = {
+        ID: null, CANVAS: null, CTX: null, RECT: null,
+        downs: [],
+        ups: [],
+        moves: [],
+        A: 4, // Default-Circle-Marker-Radius
+        B: 9 // Default-Quadrat-Marker-Länge
+    }, MAX_MOVE_LEN = 1000, MAX_DOWN_LEN = 200, MAX_UP_LEN = 200;  // Maus-Buffer
+
+    function set_prop(obj, o) {// z.B. maus.set_prop(M, {inside:1, is_down:0} )
+        var k, key, keys = Object.keys(o);
+        for (k = 0; k < keys.length; k += 1) { key = keys[k]; obj[key] = o[key]; }
+    }
+
+    function get_ctx(id) { id = id || M.ID; return doc.getElementById(id).getContext('2d'); }
+    function set_ctx(id) { M.ID = id; M.CTX = get_ctx(id); } 
+
+    function add_event(evt_name, func_pre, func_post) { // global ist M = Mause-Objekt
+        M.CANVAS = doc.getElementById(M.ID);// M global
+
+        M.CANVAS.addEventListener(evt_name, function (event) { 
+            event = event || win.event; if (func_pre) { func_pre(event); }
+        // alert(show(event)); 
+        M.CANVAS = event.target || event.srcElement; // M global
+        if (M.CANVAS.id !== M.ID) { return; }
+        M.CTX = M.CANVAS.getContext('2d');
+
+        M.RECT = M.CANVAS.getBoundingClientRect();
+        M.type = event.type;
+        M.w = M.CANVAS.width;
+        M.h = M.CANVAS.height;
+        M.i = event.clientX - M.RECT.left; // M.i = parseInt(event.clientX - rect.left, 10);
+        M.j = event.clientY - M.RECT.top;  // M.j = parseInt(event.clientY - rect.top, 10);
+        M.inside = !((M.i < 0) || (M.j < 0) || (M.i > M.w) || (M.j > M.h));
+
+        if (M.moves.length > MAX_MOVE_LEN) { M.moves.shift(); M.moves.shift(); }
+
+        switch (M.type) {
+            case "mousedown": M.mousedown = 1; M.mouseup = 0; M.downs.push(M.i); M.downs.push(M.j); M.moves = []; /* später ??? */break;
+            case "mousemove": if (M.mousedown && !M.mouseup) { M.moves.push(M.i); M.moves.push(M.j); } break;
+            case "mouseup": M.mouseup = 1; M.mousedown = 0; M.ups.push(M.i); M.ups.push(M.j);/* später???: M.moves = [];*/ break;
+            default: alert("EVENT???");break;
+        }
+        if (func_post) { func_post(event); }
+
+        // if (DEBUGGING) { // automatische Kontroll-Anzeige
+        //     set_dom_str("TA0", show(get_all()));
+        //     switch (M.type) {
+        //         case "mousedown": draw_ij_marker({ figur: "kreis", i: M.i, j: M.j, r: M.A, fillStyle: '#00f' }); break;
+        //         case "mousemove": draw_ij_lines(M.moves); break;
+        //         case "mouseup": draw_ij_marker({ figur: "qadrat", i: M.i, j: M.j, w: M.B, h: M.B, strokeStyle: '#0f0' }); break;
+        //         default: break;
+        //     }
+        // }
+
+        }, false);
+
+    }    
+
+return {get_ctx : get_ctx, set_ctx : set_ctx, add_event : add_event};
+} (window));
+
+function log() {
+	console.log("gfgndkfjng");
+}
+
+
+
+window.onload = function () {
+	if (top["bib"]) { top.bib.dl({ doc: document, id: 'DL1', show_idx: [0] }); }
+	// init Maus
+	canvashelper.set_ctx("output-canvas");
+	canvashelper.add_event("mousemove");
+	canvashelper.add_event("mousedown", log);
+	canvashelper.add_event("mouseup");
+};
 </script>
 </head>
 <body>
 
 
-<h1> .. App 4 
+<h1> Canvas to SVG
 </h1>
 
-<p class="float_right rot">IN BEARBEITUNG</p>
+<form id="post-form">
+    <label for="graph-color">Graph color</label><br>
+    <input type="color" name="graph-color" value="#ff0000" id="graph-color"><br><br>
+</form>
+<div>
+    <canvas id="output-canvas" width="700" height="400" style="border: 1px solid #DDD;"></canvas>
+</div>
+<div>
+<textarea id="TA0" cols="60" rows="10"></textarea><br><br>
+</div>
 
 
 </body>
