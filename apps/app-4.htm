@@ -1,7 +1,7 @@
 ﻿<!DOCTYPE html>
 <html lang="de">
 <head>
-<title> App 4 (  )</title>
+<title> App 4 (Canvas to SVG)</title>
 <meta charset="UTF-8" />
 <meta name="robots" content="noindex" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -206,11 +206,11 @@ window.onload = function () {
 </h1>
 
 <form id="post-form">
-    <label for="graph-color">Stroke color</label><br>
+    <label for="graph-color">Stroke color:</label>
     <input type="color" name="graph-color" value="#ff0000" id="graph-color"><br><br>
-    <button type="button" onclick="canvashelper.setMode('lines');">Start lines</button><br>
-    <button type="button" onclick="canvashelper.endLines();">End lines</button><br>
-    <button type="button" onclick="canvashelper.dumpSvg();">Create SVG</button><br>
+    <button type="button" onclick="canvashelper.setMode('lines');">Neues Polygon</button>
+    <button type="button" onclick="canvashelper.endLines();">Polygon schließen</button>
+    <button type="button" onclick="canvashelper.dumpSvg();">SVG erstellen</button><br>
 </form>
 <div>
     <canvas id="output-canvas" width="700" height="400" style="border: 1px solid #DDD;"></canvas>
