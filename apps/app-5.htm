@@ -7,9 +7,188 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="stylesheet" href="../kern/esa.css" />
 <script>
+
+var vg = (function (win) {
+            "use strict";
+            var hwin = null, doc = win.document, drag = { el: 0, x: 0, y: 0, mat: 0, xy: [], err: false };
+
+		    var svgNamespace   = "http://www.w3.org/2000/svg";
+		    var xlinkNamespace = "http://www.w3.org/1999/xlink";
+
+		    var objects = [];
+
+
+
+            function popup(str, url, o) { //aufruf: .popup(str) oder .popup(null,url)
+              url = url || null;
+              o = o || { top: 0, left: 150, width: 800, height: 600 };
+              var flags = ["toolbar=no,dependent=yes,location=no,directories=no,",
+               "status=no,menubar=no,scrollbars=yes,resizable=yes,top=",
+               o.top, ",left=", o.left, ",width=", o.width, ",height=", o.height
+            ].join('');
+              if (hwin && !hwin.closed) { hwin.close(); } hwin = null;
+              if (url) {
+                hwin = win.open(url, "popup", flags);
+              } else if (!str) {
+                hwin = 0;
+              } else {
+                hwin = win.open("", "popup", flags); hwin.document.write(str);
+              }
+              if (hwin) {
+                if (hwin.opener) { hwin.opener = win.self; }
+                if (hwin.focus) { hwin.focus(); }
+                if (hwin.document) { hwin.document.close(); }
+              }
+            }
+
+            function testanzeige_von_event_daten(id_ta, evt) {
+              var target = evt.currentTarget || evt.srcElement || evt.target,
+        str = "Mouse-Event (siehe http://caniuse.com/#search=svg)"
+        + "\nevt.timeStamp = " + evt.timeStamp
+        + "\ntarget = evt.currentTarget||evt.srcElement||evt.target"
+        + "\ntarget = " + target
+        + "\ntarget.nodeName = " + target.nodeName
+        + "\ntarget.id       = " + target.id
+        + "\nevt.type        = " + evt.type + " Mouse-Button=" + (evt.button || evt.which)
+        + "\nevt.clientX/Y   = " + evt.clientX + " " + evt.clientY
+        + "\nevt.offsetX/Y   = " + evt.offsetX + " " + evt.offsetY
+        + "\nevt.pageX/Y     = " + evt.pageX + " " + evt.pageY
+        + "\nevt.screenX     = " + evt.screenX + " " + evt.screenX
+        + "\nevt.shiftKey/ctrlKey=" + evt.shiftKey + " " + evt.ctrlKey
+        + "\nevt.bubbles/cancelable=" + evt.bubbles + " " + evt.cancelable
+        + "\ndrag.err=" + drag.err
+        + "\n(x,y)-Array drag.xy=" + drag.xy;
+              // IE? OP? "\nBewegungsrichtung in X/Y=" + evt.movementX + " " + evt.movementY;
+              doc.getElementById(id_ta).value = str;
+            }
+
+            function get_obj() {
+              var i, a = arguments, obj = a[0] || win;
+              for (i = 1; i < a.length; i += 1) {
+                if (!obj.hasOwnProperty(a[i])) { return null; }
+                obj = obj[a[i]];
+              } return obj;
+            }
+            function el2top(el) {
+              var i, els, p;
+              //if (el.atTop === true ) { return el; }
+              if (el.atTop === true && drag.err === false) { return el; }
+              drag.el = el.cloneNode(true);
+              els = el.ownerDocument.documentElement.querySelectorAll('.draggable');
+              for (i = 0; i < els.length; i += 1) { els[i].atTop = null; }
+              p = el.parentNode;
+              p.removeChild(el);
+              p.appendChild(drag.el);
+              drag.el.atTop = true;
+              drag.err = false;
+              return drag.el;
+            }
+
+            function drag_step(evt) {
+              var dx, dy, max_drag_step = 16;
+              dx = evt.clientX - drag.x;
+              dy = evt.clientY - drag.y;
+              if (Math.abs(dx) + Math.abs(dy) > max_drag_step) { drag.err = true; } // zu schnelles Ziehen
+
+              drag.mat[4] += dx;
+              drag.mat[5] += dy;
+
+              drag.xy.push(drag.x);
+              drag.xy.push(drag.y);
+
+              testanzeige_von_event_daten("TA0", evt);
+
+              drag.el.setAttributeNS(null, "transform", "matrix(" + drag.mat.join(' ') + ")");
+              drag.x = evt.clientX;
+              drag.y = evt.clientY;
+            }
+            function drag_off(evt) {
+              if (drag.el !== 0) {
+                drag.xy = [];  //drag-xy-Koordinaten-Arr zurücksetzen
+                drag.el.removeAttributeNS(null, "onmousemove");
+                drag.el.removeAttributeNS(null, "onmouseout");
+                drag.el.removeAttributeNS(null, "onmouseup");
+                drag.el = 0;
+              }
+            }
+            function draggable(evt) {
+              var i, ta, target = evt.currentTarget || evt.srcElement || evt.target,
+        button = evt.button;
+              drag.el = el2top(target);
+              drag.x = evt.clientX;
+              drag.y = evt.clientY;
+              drag.mat = drag.el.getAttributeNS(null, "transform").slice(7, -1).split(' ');
+              for (i = 0; i < drag.mat.length; i += 1) { drag.mat[i] = parseFloat(drag.mat[i]); }
+              drag.el.setAttributeNS(null, "onmousemove", "vg.drag_step(evt)");
+              drag.el.setAttributeNS(null, "onmouseout", "vg.drag_off(evt)");
+              drag.el.setAttributeNS(null, "onmouseup", "vg.drag_off(evt)");
+            }
+
+            function spawn(object) {
+            	var i, element = null, key = '', keys = Object.keys(object);
+            	if (object) {
+            		element = document.createElementNS(svgNamespace, object.tagName);
+	           		for( i = 0; i < keys.length; i += 1 ) { 
+	           			key = keys[i];
+	           			if (key != 'tagName') {
+	           				element.setAttributeNS(null,key,object[key]);
+	           			}
+					  	
+					}
+					element.setAttributeNS(null, 'onmousedown', 'vg.draggable(evt)');
+					element.setAttributeNS(null, 'class', 'draggable');
+					return element;
+            	}
+            	return false;
+
+
+
+
+            }
+
+            function createRect(settingsFormId) {
+            	var settingsForm = document.getElementById(settingsFormId);
+
+            	var rect = {
+            		tagName : 'rect',
+            		width: settingsForm.getElementsByClassName('rect-width')[0].value,
+            		height: settingsForm.getElementsByClassName('rect-height')[0].value,
+            		id: 'object-' + (objects.length + 1),
+            		fill: settingsForm.getElementsByClassName('color')[0].value,
+            		x: '250',
+            		y: '150',
+            		transform: 'matrix(1 0 0 1 0 0)'
+            	}
+            	var element = spawn(rect);
+            	doc.getElementById('SVG0').appendChild(element);
+            }
+
+            function createCircle(settingsFormId) {
+            	var settingsForm = document.getElementById(settingsFormId);
+
+            	var rect = {
+            		tagName : 'circle',
+            		r: settingsForm.getElementsByClassName('circle-radius')[0].value,
+            		id: 'object-' + (objects.length + 1),
+            		fill: settingsForm.getElementsByClassName('color')[0].value,
+            		cx: '250',
+            		cy: '150',
+            		transform: 'matrix(1 0 0 1 0 0)'
+            	}
+            	var element = spawn(rect);
+            	doc.getElementById('SVG0').appendChild(element);
+            }
+
+            return { draggable: draggable, drag_step: drag_step, drag_off: drag_off, popup: popup, spawn: spawn, createRect : createRect, createCircle: createCircle };
+          } (window));
+
+
+
+  var hwin = null; //global
   window.onload = function () {
-    //if (top["bib"]) { top.bib.dl({ doc: document, id: 'DL1', show_idx: [ ] }); } 
+    if (top["bib"]) { top.bib.dl({ doc: document, id: 'DL1', show_idx: [0] }); }
   };
+
 </script>
 </head>
 <body>
@@ -18,7 +197,78 @@
 <h1> ... App 5 
 </h1>
 
-<p class="float_right rot">IN BEARBEITUNG</p>
+
+	<form id="settings-form">
+		<fieldset>
+			<legend>Allgemein</legend>
+		    <label for="color">Farbe:</label>
+		    <input type="color" name="color" value="#ff0000" id="color" class="color"><br><br>
+		</fieldset>
+
+	    <fieldset>
+			<legend>Rechteck</legend>
+			<label for="rect-width">Rect Width</label>
+			<input type="text" name="rect-width" id="rect-width" class="rect-width" value="80" style="width: 40px;" />
+
+			<label for="rect-height">Rect Height</label>
+			<input type="text" name="rect-height" id="rect-height" class="rect-height" value="80"  style="width: 40px;" />
+
+			<button type="button" onclick="vg.createRect('settings-form');">Neues Rechteck</button>
+	    </fieldset>
+
+	    <fieldset>
+			<legend>Kreis</legend>
+			<label for="circle-radius">Radius</label>
+			<input type="text" name="circle-radius" id="circle-radius" class="circle-radius" value="30" style="width: 40px;" />
+
+			<button type="button" onclick="vg.createCircle('settings-form');">Neuer Kreis</button>
+	    </fieldset>
+	    
+	</form>
+    
+    <div class="h1" style="display:block; width:800px; height:300px;margin-left:0px;padding:20px;border:0.1em solid #ccc;">
+        <svg id="SVG0" class="grau" xmlns="http://www.w3.org/2000/svg" version="1.1" width="800" height="300"
+             '' 'xmlns:xlink="http://www.w3.org/1999/xlink"' ''>
+            <desc>          http://www.w3.org/wiki/SVG_Links  </desc>
+
+            <rect x="0.5" y="0.5" width="800" height="300" fill="none" stroke="black" />
+            <circle id="red" class="draggable" onmousedown="vg.draggable(evt)"
+                    cx="380" cy="100" r="20"
+                    fill="red" transform="matrix(1 0 0 1 46 18)" />
+            <rect id="blue" class="draggable" onmousedown="vg.draggable(evt)"
+                  x="250" y="150" width="80" height="80"
+                  fill="blue" transform="matrix(1 0 0 1 46 18)" />
+            <rect class="draggable" onmousedown="vg.draggable(evt)"
+                  id="green" x="160" y="50" width="50" height="50"
+                  fill="green" transform="matrix(1 0 0 1 51 11)" />
+        </svg>
+    </div>
+
+
+    <p class="grau border">
+        Anzeige:
+        <a href="javascript:void(0)" onclick='document.getElementById("TA0").value=document.getElementById("SVG0").parentNode.innerHTML;return false;'>
+            SVG-Quelltext
+        </a>
+        <a href="javascript:void(0)" onclick='vg.popup(document.getElementById("SVG0").parentNode.innerHTML);'>
+            SVG-Vorschau
+        </a>
+    </p>
+
+
+    <form action="#" onsubmit="return false;">
+        <textarea id="TA0" cols="104" rows="10" style="display:block;margin-left:10px;">id="TA0"</textarea>
+    </form>
+
+
+
+    <script type="text/ecmascript">
+        //<![CDATA[
+          
+        //]]>
+    </script>
+
+
 
 
 </body>
