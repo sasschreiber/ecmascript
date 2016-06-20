@@ -1,24 +1,180 @@
 ﻿<!DOCTYPE html>
 <html lang="de">
 <head>
-<title> App 8 (  )</title>
+<title> App 8 ( Notizbrett )</title>
 <meta charset="UTF-8" />
 <meta name="robots" content="noindex" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="stylesheet" href="../kern/esa.css" />
+<link rel="stylesheet" href="../kern/additions.css" />
 <script>
+var msg = (function (win) {
+	"use strict";
+	var doc = win.document;
+
+	var messages = [];
+
+	// Stores index to edit, if wanted
+	var editIndex = false;
+
+	var main_textarea = "nachrichten";
+
+
+	function init_ta_form( that, id_textarea, id_muster_auswahl ) {
+		main_textarea = id_textarea;
+		var i = 0, o = { },
+		key, // key kann als filename verwendet werden
+		alle_auswahl_muster = document.getElementById(id_muster_auswahl).value,
+		arr = alle_auswahl_muster.split("====SPLiT===");
+		// arr ist der Array aller Textmuster
+
+		for( i=1; i < arr.length-1; i += 2 ){ key = arr[i].trim(); o[key] = arr[i+1].trim();}
+
+		key = that.options[that.selectedIndex].value.trim();
+		if(key===""){  
+			document.getElementById(id_textarea).value =  "Bitte erst das gewünschte Form-Muster auswählen...";
+		}
+		else { 
+			document.getElementById(id_textarea).value = o[key];
+		}
+	}
+
+	function storeLocal(message) {
+		if (editIndex === false) {
+			messages.push({message: message});
+		} else {
+			messages[editIndex].message = message;
+		}
+		editIndex = false;
+		
+		localStorage.messageboard = JSON.stringify(messages);
+		document.getElementById(main_textarea).value = "";
+		reRender();
+	}
+
+	function loadFromLocalstorage() {
+		if (localStorage.messageboard) {
+			messages = JSON.parse(localStorage.messageboard);
+		}
+	}
+
+	function deleteMessage(index) {
+		messages.splice(index, 1);
+		localStorage.messageboard = JSON.stringify(messages);
+		reRender();
+	}
+
+	function editMessage(index) {
+		console.log(main_textarea);
+		document.getElementById(main_textarea).value = messages[index].message;
+		editIndex = index;
+	}
+
+	function renderMessages(containerId) {
+		var container = document.getElementById(containerId);
+
+		var text = "";
+		messages.forEach(function(item, index) {
+			text += "<article class='message'>";
+			//Edit-Button
+			text += "<span class='button edit-button' onmouseup='msg.editMessage(" + index + ")'>EDIT</span>";
+			text += "<span class='button edit-button' onmouseup='msg.deleteMessage(" + index + ")'>DELETE</span>";
+			text = text + "<pre>" + item.message + "\n\n" + "</pre></article>";
+
+		});
+
+		container.innerHTML = text;
+	}
+
+	function reRender() {
+		renderMessages("posting-wall");
+	}
+
+
+
+	return {
+	init_ta_form : init_ta_form,
+	storeLocal : storeLocal,
+	loadFromLocalstorage : loadFromLocalstorage,
+	renderMessages : renderMessages,
+	deleteMessage : deleteMessage,
+	editMessage : editMessage
+	};
+}(window));
+
   window.onload = function () {
-    //if (top["bib"]) { top.bib.dl({ doc: document, id: 'DL1', show_idx: [ ] }); } 
+    msg.loadFromLocalstorage();
+    msg.renderMessages("posting-wall");
   };
+
+
 </script>
 </head>
 <body>
 
 
-<h1> .. App 8 
+<h1> Localstorage-Notizbrett
 </h1>
 
-<p class="float_right rot">IN BEARBEITUNG</p>
+<h2>Meine gespeicherten Nachrichten:</h2>
+<div id="posting-wall">
+LOAD HERE
+</div>
+
+
+
+<div id="control-panel" style="width: auto;">
+	<form action="http://verarbeite_form_daten.php" onsubmit="return false;">
+
+	<select size="1" id="gruppe" onchange="msg.init_ta_form(this, 'nachrichten', 'text_muster_auswahl')">
+	<option value=""> Bitte erst Formular auswählen</option>
+	<option value="INTERESSENSGEBIETE"> Interessensgebiete teilen</option>
+	<option value="WEBLINK_SAMMLUNG"> Weblink sammeln  </option>
+	<option value="VORTRAG_BEWERTUNGEN"> Vortrag bewerten auch Eval, Pg-bewerten </option>
+	</select><br>
+	<textarea id="nachrichten" cols="60" rows="13" maxlength="9999" placeholder="Bitte erst das gewünschte Form-Muster auswählen..."></textarea><br>
+
+
+
+
+	<!-- Schreibhilfen und Strukturierungshilfen, Pseudo-Formular -->
+	<textarea id="text_muster_auswahl" style="display:none" cols="60" rows="3">
+====SPLiT=== INTERESSENSGEBIETE ====SPLiT===
+*Vorname:
+
+*Interessensgebiete:
+
+
+====SPLiT=== VORTRAG_BEWERTUNGEN ====SPLiT===
+*Vortrag-Bewerten:
+
+*Vortrag-Titel:
+
+*Beurteilungspunkte: 0 bis 10 Punkte (sehr gut)
+
+(a) Punkte für Gliederung / Strukturierung   =
+(b) Punkte für die Verständlichkeit          =
+(c) Punkte für die Souveränität / freie Rede =
+(d) Punkte für das fachliche Niveau          =
+
+*Konstruktive-Anregungen:
+
+
+====SPLiT=== WEBLINK_SAMMLUNG ====SPLiT===
+*Weblink:
+
+*Thema:
+
+*Url:
+
+*Notizen:
+	</textarea>
+	<button onclick='msg.storeLocal(document.getElementById("nachrichten").value)'> Sendet ... </button>
+	</div>
+
+	</form>
+</div>
+
 
 
 </body>

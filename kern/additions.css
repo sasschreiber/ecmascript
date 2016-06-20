@@ -13,6 +13,16 @@
 	margin: 0px;
 }
 
+#posting-wall article.message {
+	margin-bottom: 15px;
+	max-width: 500px;
+}
+
+#posting-wall span.button {
+	margin: 3px;
+	cursor: pointer;
+}
+
 #control-panel {
 	background-color: #FFF;
 	width: 270px;
