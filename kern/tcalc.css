@@ -1,0 +1,45 @@
+table.tcalc {
+	border-collapse: collapse;
+	margin: 15px;
+
+
+}
+
+table.tcalc th, table.tcalc td {
+	min-width: 200px;
+	border: 1px solid #BBB;
+	font-family: Arial;
+	padding: 5px;
+}
+
+table.tcalc th {
+	background-color: #EEE;
+}
+
+table.tcalc th:empty:after {
+	content: "Insert header here";
+	color: #DDD;
+}
+
+table.tcalc td:empty:after {
+	content: "0";
+	color: #DDD;
+}
+
+
+
+/*------------ CONTROL PANEL ----------*/
+div#control-panel {
+	position: absolute;
+	height: 100px;
+	background: #FFF;
+	box-shadow: 3px 3px 5px 0px rgba(0,0,0,0.2);
+}
+
+
+
+
+
+.hidden {
+	display: none;
+}

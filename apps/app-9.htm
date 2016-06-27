@@ -1,24 +1,173 @@
 ﻿<!DOCTYPE html>
 <html lang="de">
 <head>
-<title> App 9 (  )</title>
+<title> App 9 ( tCalc )</title>
 <meta charset="UTF-8" />
 <meta name="robots" content="noindex" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="stylesheet" href="../kern/esa.css" />
+<link rel="stylesheet" href="../kern/tcalc.css" />
 <script>
-  window.onload = function () {
-    //if (top["bib"]) { top.bib.dl({ doc: document, id: 'DL1', show_idx: [ ] }); } 
-  };
+	var tCalc = (function(win) {
+		"use strict";
+		var table = undefined, rowCount = 0, colCount = 0;
+
+		function init(tableId) {
+			this.table = win.document.getElementById(tableId);
+			if (this.table !== undefined) {
+				this.rowCount = this.table.rows.length;
+				this.colCount = this.table.rows[0].cells.length;				
+			}
+
+		}
+
+		function addRow() {
+			var row = this.table.insertRow();
+			var cell;
+			for (var i=0;i<this.colCount; i++) {
+				cell = row.insertCell();
+				cell.setAttribute("contenteditable", "true");
+			}
+			this.rowCount++;
+		}
+
+		function addCol() {
+			var col;
+
+			for (var i=0; i<this.rowCount; i++) {
+				col = this.table.rows[i].insertCell();
+				col.setAttribute("contenteditable", "true");
+			}
+			this.colCount++;
+		}
+
+		function getRowValues(rowNumber, maxCol) {
+			var rowValues = [];
+			var row = tCalc.table.rows[rowNumber];
+			console.log(row);
+			for (var i=0; i < tCalc.colCount; i++) {
+				if (i < maxCol) {
+					rowValues.push(parseFloat(row.cells[i].innerHTML));
+				}
+			}
+			return rowValues;
+		}
+
+		function rowSum(rowNumber, maxCol) {
+			var values = getRowValues(rowNumber, maxCol);
+			console.log(values);
+			var sum = values.reduce(function(a, b) { return a + b; }, 0);
+			return sum;
+		}
+
+		return {
+			init : init,
+			addRow : addRow,
+			addCol : addCol,
+			getRowValues : getRowValues,
+			rowSum : rowSum
+		};
+}(window));
+
+var calcUi = (function(win) {
+	var gui = undefined;
+	var currentTarget;
+	var tCalc;
+
+	function init(controlPanelId, calculator) {
+		tCalc = calculator;
+		gui = document.querySelector(controlPanelId);
+		gui.innerHTML = '<span id="row-sum">ROW Sum</span>';
+
+	    document.body.onclick = function(e){
+	        var e = e || window.event;
+	        var target = e.target || e.srcElement;
+	        if(target.tagName.toLowerCase() ==  "td") {
+	            showGui(target);
+	        } else if (target.id == "row-sum") {
+	        	guiRowSum();
+	        }
+	        else {
+	        	hideGui();
+	        }
+	    };
+	}
+
+	function showGui(element) {
+		var rect = element.getBoundingClientRect();
+
+		currentTarget = element;
+		//console.log(rect.top, rect.right, rect.bottom, rect.left);
+		gui.style.top = rect.bottom + "px";
+		gui.style.left = rect.left + "px";
+		gui.style.width = (rect.right - rect.left) + "px";
+
+
+		gui.classList.remove("hidden");
+	}
+
+	function hideGui() {
+		//currentTarget = undefined;
+		gui.classList.add("hidden");
+	}
+
+	function guiRowSum() {
+		if (currentTarget != undefined) {
+
+			currentTarget.innerHTML = tCalc.rowSum(currentTarget.parentNode.rowIndex, currentTarget.cellIndex);
+		}
+	}
+
+
+	return {
+		init : init,
+		showGui : showGui,
+		hideGui : hideGui,
+		guiRowSum : guiRowSum
+	};
+}(window));
+
+
+	window.onload = function () {
+		tCalc.init("calctable");
+		calcUi.init("#control-panel", tCalc);
+	
+	};
+
+//Current Object:
+//document.getSelection().anchorNode
 </script>
 </head>
 <body>
 
 
-<h1> ...  App 9 
+<h1> App 9 (tCalc) 
 </h1>
+<span class="button" onmouseup="tCalc.addRow()">ADD ROW</span>
+<span class="button" onmouseup="tCalc.addCol()">ADD COL</span>
 
-<p class="float_right rot">IN BEARBEITUNG</p>
+<table class="tcalc" id="calctable" contenteditable="true">
+	<tr>
+		<td></td>
+		<td></td>
+		<td></td>
+	</tr>
+	<tr>
+		<td></td>
+		<td></td>
+		<td></td>
+	</tr>
+	<tr>
+		<td></td>
+		<td></td>
+		<td></td>
+	</tr>
+</table>
+
+<div id="control-panel" class="hidden" style="left: 0px; right: 0px;">
+	
+
+</div>
 
 
 </body>
