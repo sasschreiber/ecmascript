@@ -12,60 +12,133 @@
 		"use strict";
 		var table = undefined, rowCount = 0, colCount = 0;
 
+		var tableObject = {};
+
 		function init(tableId) {
-			this.table = win.document.getElementById(tableId);
-			if (this.table !== undefined) {
-				this.rowCount = this.table.rows.length;
-				this.colCount = this.table.rows[0].cells.length;				
+			tCalc.table = win.document.getElementById(tableId);
+			if (tCalc.table !== undefined) {
+				tCalc.rowCount = tCalc.table.rows.length;
+				tCalc.colCount = tCalc.table.rows[0].cells.length;				
 			}
+			tCalc.tableArray = [];
 
 		}
 
 		function addRow() {
-			var row = this.table.insertRow();
+			var row = tCalc.table.insertRow();
 			var cell;
-			for (var i=0;i<this.colCount; i++) {
+			for (var i=0;i<tCalc.colCount; i++) {
 				cell = row.insertCell();
 				cell.setAttribute("contenteditable", "true");
 			}
-			this.rowCount++;
+			tCalc.rowCount++;
 		}
 
 		function addCol() {
 			var col;
 
-			for (var i=0; i<this.rowCount; i++) {
-				col = this.table.rows[i].insertCell();
+			for (var i=0; i<tCalc.rowCount; i++) {
+				col = tCalc.table.rows[i].insertCell();
 				col.setAttribute("contenteditable", "true");
 			}
-			this.colCount++;
+			tCalc.colCount++;
 		}
 
 		function getRowValues(rowNumber, maxCol) {
 			var rowValues = [];
 			var row = tCalc.table.rows[rowNumber];
-			console.log(row);
 			for (var i=0; i < tCalc.colCount; i++) {
 				if (i < maxCol) {
-					rowValues.push(parseFloat(row.cells[i].innerHTML));
+					if (row.cells[i].innerHTML == "") {
+						rowValues.push(0);
+					}
+					else {
+						rowValues.push(parseFloat(row.cells[i].innerHTML));
+					}
+					
 				}
 			}
 			return rowValues;
 		}
 
+		function getColValues(colNumber, maxRow) {
+			var colValues = [];
+			var row;
+			for (var i=0; i < tCalc.rowCount; i++) {
+				row = tCalc.table.rows[i];
+				if (i < maxRow) {
+					if (row.cells[colNumber].innerHTML == "") {
+						colValues.push(0);
+					}
+					else {
+						colValues.push(parseFloat(row.cells[colNumber].innerHTML));
+					}
+					
+				}
+			}
+			return colValues;
+		}
+
 		function rowSum(rowNumber, maxCol) {
 			var values = getRowValues(rowNumber, maxCol);
-			console.log(values);
 			var sum = values.reduce(function(a, b) { return a + b; }, 0);
 			return sum;
 		}
+
+		function colSum(colNumber, maxRow) {
+			var values = getColValues(colNumber, maxRow);
+			var sum = values.reduce(function(a, b) { return a + b; }, 0);
+			return sum;
+		}
+
+		function save() {
+			tCalc.tableObject = {};
+			var currentRow;
+			for (var i=0; i < tCalc.rowCount; i++) {
+				currentRow = {};
+				for (var j=0; j < tCalc.colCount; j++) {
+					currentRow[j] = tCalc.table.rows[i].cells[j].innerHTML;
+				}
+				tCalc.tableObject[i] = currentRow;
+ 			}
+ 			localStorage.setItem("table", JSON.stringify(tCalc.tableObject));
+		}
+
+		function load() {
+
+			tCalc.tableObject = JSON.parse(localStorage.table);
+			var savedrows = Object.keys(tCalc.tableObject).length;
+			var savedcols = Object.keys(tCalc.tableObject[0]).length;
+
+			if (tCalc.rowCount < savedrows) {
+				for (var i=tCalc.rowCount; i< savedrows; i++) {
+					console.log("added row");
+					tCalc.addRow();
+				}
+			}
+			if (tCalc.colCount < savedcols) {
+				for (var i=tCalc.colCount; i< savedcols; i++) {
+					tCalc.addCol();
+				}
+			}
+			for (var row in tCalc.tableObject) {
+				for (var col in tCalc.tableObject[row]) {
+					tCalc.table.rows[row].cells[col].innerHTML = tCalc.tableObject[row][col];
+				}
+			}
+		}
+
 
 		return {
 			init : init,
 			addRow : addRow,
 			addCol : addCol,
 			getRowValues : getRowValues,
-			rowSum : rowSum
+			getColValues : getColValues,
+			rowSum : rowSum,
+			colSum : colSum,
+			save : save,
+			load : load
 		};
 }(window));
 
@@ -77,7 +150,6 @@ var calcUi = (function(win) {
 	function init(controlPanelId, calculator) {
 		tCalc = calculator;
 		gui = document.querySelector(controlPanelId);
-		gui.innerHTML = '<span id="row-sum">ROW Sum</span>';
 
 	    document.body.onclick = function(e){
 	        var e = e || window.event;
@@ -86,6 +158,10 @@ var calcUi = (function(win) {
 	            showGui(target);
 	        } else if (target.id == "row-sum") {
 	        	guiRowSum();
+	        	hideGui();
+	        } else if (target.id == "col-sum") {
+	        	guiColSum();
+	        	hideGui();
 	        }
 	        else {
 	        	hideGui();
@@ -118,12 +194,20 @@ var calcUi = (function(win) {
 		}
 	}
 
+	function guiColSum() {
+		if (currentTarget != undefined) {
+
+			currentTarget.innerHTML = tCalc.colSum(currentTarget.cellIndex, currentTarget.parentNode.rowIndex);
+		}		
+	}
+
 
 	return {
 		init : init,
 		showGui : showGui,
 		hideGui : hideGui,
-		guiRowSum : guiRowSum
+		guiRowSum : guiRowSum,
+		guiColSum : guiColSum
 	};
 }(window));
 
@@ -145,6 +229,8 @@ var calcUi = (function(win) {
 </h1>
 <span class="button" onmouseup="tCalc.addRow()">ADD ROW</span>
 <span class="button" onmouseup="tCalc.addCol()">ADD COL</span>
+<span class="button" onmouseup="tCalc.save()">Save Table</span>
+<span class="button" onmouseup="tCalc.load()">Load Table</span>
 
 <table class="tcalc" id="calctable" contenteditable="true">
 	<tr>
@@ -165,7 +251,8 @@ var calcUi = (function(win) {
 </table>
 
 <div id="control-panel" class="hidden" style="left: 0px; right: 0px;">
-	
+	<span id="row-sum" class="button">Summe der Reihe</span><br>
+	<span id="col-sum" class="button">Summe der Spalte</span>
 
 </div>
 
