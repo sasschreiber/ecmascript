@@ -225,8 +225,16 @@ Das ist eine Liste:&lt;ul&gt;&lt;li&gt;Punkt1&lt;/li&gt;
 
 
 </dd><dt> 10. Projekt bis 2016-06-20 
-<dfn> <span class="rot">DEMNÄCHST</span> </dfn>
+<dfn> Mobile App Toolkit </dfn>
 </dt><dd>
+	<p>Mit dem Mobile App Toolkit lässt sich HTML-Code in verschiedenen Viewport-Größen anzeigen und testen. Dafür wurden zwei verschiedene iFrames eingebunden:</p>
+	<ul>
+		<li>Top-Frame: Enthält alle Buttons zum verändern des Viewports. (Datei kern/iframes/topleiste.htm)</li>
+		<li>Seiten-Frame: Das eigentliche Vorschaufenster</li>
+	</ul>
+	<p>Dadurch, dass die Vorschau in einem iFrame gerendert wird, behandelt der Browser das geschriebene HTML wie ein eigenständiges Dokument, sodass auch die klassischen Head- und Body-Tags korrekt angegeben werden müssen.</p>
+	<p>Im Beispielcode wurde eine CSS Media-Query getestet: Auf Smartphones soll die Navigationsleiste vertikal statt horizontal angezeigt werden. Das lässt sich mit der Preview wunderbar veranschaulichen.</p>
+	<p>Frame-übergreifende Javascript-Aufrufe finden sich in den verschiedenen Buttons. Das Haupt-Javascript liegt in der zentralen Datei App-10.htm, es wird aber von der Topleiste aus angesprochen.</p>
 
 
 

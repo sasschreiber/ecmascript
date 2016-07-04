@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+	<head><title>Topleiste</title></head>
+	<body style="margin: 0px;">
+	<div>
+		<div class="control-panel">
+			<button id="toggle-topleiste" onclick="top.framemanager.toggleFrame('iframe_topleiste');">x</button>
+		</div>
+			Größe Vorschaufenster: 
+			<button id="size_iphone" onclick="event.preventDefault();top.framemanager.changeSize('iframe_seitenleiste', '750', '1334');">iPhone</button>
+			<button id="size_htc" onclick="event.preventDefault();top.framemanager.changeSize('iframe_seitenleiste', '480', '800');">HTC Desire</button>
+			<button id="size_ipad" onclick="event.preventDefault();top.framemanager.changeSize('iframe_seitenleiste', '1024', '768');">iPad</button>
+			<button id="size_desktop" onclick="top.framemanager.changeSize('iframe_seitenleiste', '1366', '768');">Desktop (1366x768)</button>
+	</div>
+
+	</body>
+	
+
+</html>
+

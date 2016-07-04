@@ -1,24 +1,161 @@
 ﻿<!DOCTYPE html>
 <html lang="de">
 <head>
-<title> App 10 (  )</title>
+<title> App 10 ( Mobile App Toolkit )</title>
 <meta charset="UTF-8" />
 <meta name="robots" content="noindex" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="stylesheet" href="../kern/esa.css" />
+<style>
+#iframe_topleiste {
+	width: 100%;
+	border: 1px solid #DDD;
+	box-sizing: border-box;
+}
+#iframe_seitenleiste {
+	position:fixed;
+	top: 60px;
+	right: 5px;
+	border: 1px solid #DDD;
+	box-sizing: border-box;
+	background: #FFF;
+	overflow:scroll;
+}
+#editorform {
+	width: 50%;
+	box-sizing: border-box;
+}
+#editorform textarea {
+	width: 100%;
+	box-sizing: border-box;
+}
+</style>
 <script>
+var framemanager = (function(win) {
+	function showPreview(frameName) {
+		"use strict";
+		var frame = frames[frameName];
+		if (frame != undefined) {
+			var doc = frame.contentWindow.document;
+			doc.open();
+			doc.write(document.getElementById("content").value);
+
+			var style = doc.createElement("style");
+			style.appendChild(document.createTextNode(document.getElementById("styles").value));
+			doc.head.appendChild(style);
+			doc.close();
+		}
+	}
+
+	function changeSize(frameName, width, height) {
+		"use strict";
+		var frame = frames[frameName];
+		if (frame != undefined) {
+			frame.width = width;
+			frame.height = height;
+		}		
+	}
+
+	function toggleFrame(frameName, direction) {
+		"use strict";
+		var frame = document.getElementById(frameName);
+		if (frame != undefined) {
+			if (direction == "horizontal") {
+				if (frame.width == 23) {
+					frame.width = frame.getAttribute("data-initialwidth"); 
+				}
+				else {
+					frame.width = 23;
+				}	
+			}
+			else {
+				if (frame.height == 23) {
+					frame.height = frame.getAttribute("data-initialheight"); 
+				}
+				else {
+					frame.height = 23;
+				}				
+			}
+
+		}			
+	}
+
+	return {
+		showPreview : showPreview,
+		changeSize : changeSize,
+		toggleFrame : toggleFrame
+
+	};
+
+}(window));
   window.onload = function () {
     //if (top["bib"]) { top.bib.dl({ doc: document, id: 'DL1', show_idx: [ ] }); } 
   };
 </script>
+
 </head>
 <body>
 
 
-<h1> ... App 10
+<h1> Mobile App Toolkit
 </h1>
 
-<p class="float_right rot">IN BEARBEITUNG</p>
+<iframe src="../kern/iframes/topleiste.htm" name="iframe_topleiste" id="iframe_topleiste" width="500" height="60" data-initialheight="60"></iframe>
+
+
+<form id="editorform">
+	<label for="content">Inhalt</label><br>
+	<textarea name="content" id="content" cols="60" rows="13" maxlength="9999">
+<html>
+	<body>
+		<nav id="navigation">
+			<ul>
+				<li><a href="#">Page 1</a></li>
+				<li><a href="#">Page 2</a></li>
+				<li><a href="#">Page 3</a></li>
+			</ul>
+
+		</nav>
+		<h1>Header 1</h1>
+		<p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
+		<p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
+	</body>
+</html>
+	</textarea><br>
+	<label for="styles">Styles</label><br>
+	<textarea name="styles" id="styles" rows="10">
+#navigation {
+	clear: both;
+	position: relative;
+	overflow: hidden;
+}
+#navigation ul {
+	width: 100%;
+	margin-left: 0px;
+}
+
+#navigation ul li {
+	list-style: none;
+	float: left;
+	padding: 2px;
+}
+/* Mobile Navigation */
+@media only screen and (min-width : 320px) and (max-width : 750px) {
+	#navigation ul li {
+		float: none;
+	}
+
+}
+
+	</textarea>
+	<button id="preview" onclick="event.preventDefault();framemanager.showPreview('iframe_seitenleiste');">Render HTML</button>
+
+</form>
+<div>
+	<button id="toggle-seitenleiste" onclick="framemanager.toggleFrame('iframe_seitenleiste', 'horizontal');">Toggle Seite</button>
+	<iframe src="../kern/iframes/seitenleiste.htm" name="seitenleiste" id="iframe_seitenleiste" width="500" height="300" data-initialwidth="500"></iframe>
+</div>
+
 
 
 </body>
